@@ -1,0 +1,291 @@
+body 
+{
+    height: 100%;
+	background-color: black;
+	font-family: terminalFont;
+	color: #29E18C;
+	cursor:default;
+	  -webkit-touch-callout: none; /* iOS Safari */
+	  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+	  -khtml-user-select: none;    /* Konqueror */
+	  -moz-user-select: none;      /* Firefox */
+	  -ms-user-select: none;       /* Internet Explorer/Edge */
+	  user-select: none;           /* Non-prefixed version, currently
+									  not supported by any browser */
+}
+
+pre 
+{
+	font-family: terminalFont;	
+}
+
+@font-face 
+{
+    font-family: terminalFont;
+    src: url(../font/Fixedsys500c.ttf);
+}
+
+/* Terminal Splash */
+
+.terminal-splash
+{
+	padding-left:100px;
+	padding-right:100px;
+	padding-top:100px;
+}
+
+#boot-sequence
+{
+	top:20px;
+	padding-left:120px;
+	padding-right:120px;
+	position:relative;
+}
+
+#boot-loading
+{
+	float:left;
+}
+
+#boot-ticks
+{
+	float:right;
+
+}
+
+/* Terminal Info */
+
+#terminal-info
+{
+	top:20px;
+	padding-left:20px;
+	padding-right:20px;
+	position:relative;
+	text-align:center;
+}
+
+/* Terminal Navbar */
+
+#terminal-nav
+{
+	top:40px;
+	width:175px;
+	height:380px;
+	padding-right:75px;
+	display:inline-block;
+	float:left;
+}
+
+.nav-text
+{
+	
+}
+
+#nav-list > li
+{
+	cursor:pointer;
+	padding-top:5px;
+	padding-bottom:8px;
+}
+
+#boot-text > li
+{
+	padding-top:5px;
+	padding-bottom:4px;
+}
+
+ul
+{
+	list-style-type:none; 
+	padding-left:20px;
+	padding-right:20px;
+}
+ul#nav-list{
+	margin-top:0px;
+}
+
+li
+{
+}
+
+li.active 
+{
+	background-color:#29E18C;
+	color:black;
+}
+
+/* Terminal Internal Navbar */
+
+.inline-nav 
+{
+}
+
+.inline-nav > li
+{
+	display:inline;
+	padding-bottom:3px;
+	cursor: pointer;
+}
+li.success 
+{
+	color: #21e642;
+}
+
+li.awaiting
+{
+	color: #cee642;
+}
+.inline-nav > li.success.active
+{
+	animation:blinker-success 5s linear infinite;
+	background-color:#21e642;
+	color:black;
+}
+.inline-nav > li.awaiting.active
+{
+	animation:blinker-awaiting 5s linear infinite;
+	background-color:#cee642;
+	color:black;
+}
+
+a 
+{
+	color:aquamarine;	
+}
+
+a.awaiting
+{
+	color: #cee642;
+}
+a.success
+{
+	color: #21e642;
+}
+@keyframes blinker-success 
+{  
+  50% 
+  {
+	background-color:transparent;
+	color:#21e642;
+  }
+}
+@keyframes blinker-awaiting
+{  
+  50% 
+  {
+	background-color:transparent;
+	color:#cee642;
+  }
+}
+@keyframes blinker 
+{  
+  50% 
+  {
+	background-color:transparent;
+	color:black;
+  }
+}
+
+/* Terminal Text */
+
+#terminal-content 
+{
+	padding-left:20px;
+	top:40px;
+	position:relative;
+}
+.terminal-full-column 
+{
+	width:460px;
+	display:inline-block;
+	float:left;
+}
+.terminal-half-column 
+{
+	width:230px;
+	display:inline-block;
+	float:left;
+}
+
+#university{
+	height:260px;
+}
+
+h4
+{
+	text-decoration:underline;
+	font-size:12pt;
+	margin-top:0px;
+}
+h5
+{
+	font-size:12pt;
+	margin-top:0px;
+	margin-bottom:0px;
+}
+
+.terminal-center-text 
+{
+	text-align:center;
+}
+.terminal-heading 
+{
+	text-decoration:underline;
+}
+/* Terminal Aesthetics */
+
+#terminal-container
+{
+	background-image: url('../images/monitorborder.png');
+	width: 930px;
+	height: 700px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#terminal
+{
+	width: 750px;
+	height: 460px;
+	background-image: url('../images/background.png');
+	font-family: terminalFont;
+	color: #33dd88;
+	font-size: 11pt;
+	overflow: hidden;
+	position: absolute;
+	left: 50%;
+	margin-left: -372px;
+	top: 79px;
+}
+
+#power-button
+{
+	position: absolute;
+	width: 54px;
+	height: 50px;
+	margin-left: 50%;
+	left: 254px;
+	top: 601px;
+	cursor: pointer;
+}
+
+#flicker
+{
+	background-image: url('../images/flicker.png');
+	height: 55px;
+	width: 100%
+}
+
+#flash
+{
+	background-image: url('../images/flash.png');
+	height: 100%;
+	width: 100%
+}
+
+@keyframes flickering {
+    0%   {background-color: red;}
+    25%  {background-color: yellow;}
+    50%  {background-color: blue;}
+    100% {background-color: green;}
+}

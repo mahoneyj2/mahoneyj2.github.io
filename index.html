@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <title>Terminal</title>
+  <meta name="description" content="Fallout Terminal">
+  <meta name="author" content="James Mahoney">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/terminal.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  
+</head>
+<body>
+<div id="terminal-container">
+	<!--<div id="flash"></div>-->
+	<div id="terminal">
+	
+		<!-- Main screen -->
+
+			<div id="terminal-info">
+				ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM
+				<br>
+				COPYRIGHT 2075-2077 ROBCO INDUSTRIES
+			</div>
+			<div id="terminal-content">
+				<div id="terminal-nav">
+					<ul id="nav-list">
+						<li id="about" class="">[ABOUT ME]</li>
+						<li id="education" class="">[EDUCATION]</li>
+						<li id="experience" class="">[EXPERIENCE]</li>
+						<li id="projects"class="">[PROJECTS]</li>
+						<li id="contact" class="">[CONTACT]</li>
+					</ul>
+				</div>
+				<div id="inner-terminal-content">
+					<div id="university" class="terminal-full-column">
+						EDUCATION
+						<p>
+							University of Warwick - Computer Science MEng
+						</p>
+						<ul id="year-nav" class="inline-nav">
+							<li id="year1" class="success">[YEAR 1]</li>
+							<li id="year2" class="success">[YEAR 2]</li>
+							<li id="year3" class="success">[YEAR 3]</li> 
+							<li id="year4" class="awaiting">[YEAR 4]</li>
+							<li id="total" class="awaiting active">[TOTAL]</li>
+						</ul>
+						<ul id="module-list">
+							<li><pre>[========================>        ]</pre></li>
+							<li>CURRENT STATUS - <a class="awaiting">IN PROGRESS (YEAR 4)</a></li>
+							<br>
+							<li>AVERAGE MARK - 78.43%</li>
+							<br>
+							<li>MODULE GRADES:</li>
+							<li>1st - 18</li>
+							<li>2.1 - 5</li>
+							<li>2.2 - 0</li>
+						</ul>
+						<!--
+						<ul id="module-list">
+							<li>FIRST CLASS HONOURS - 78.3%</li>
+							<li>---------------------------</li>
+							<li>MODULE RESULTS</li>
+							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs325/">Compiler Design</a> - 91%</li>
+							<li>> <a href="">3rd Year Project</a> - 72% </li>
+							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs349/">Principles of Programming Languages</a> - 93%</li>
+							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs342/">Machine Learning</a> - 84%</li>
+							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs346/">Advanced Databases</a> - 66%</li>
+							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs313/">Mobile Robotics</a> - 81%</li>
+							<li>> <a target="_blank" href="http://www2.warwick.ac.uk/services/aro/dar/quality/modules/ib382/">Project Management</a> - 67%</li>
+							<li>> </li>
+						</ul>
+						-->
+					</div>
+					<div id="alevel" class="terminal-half-column">
+						<p>
+							The Judd School
+							<br>
+							<br>
+							A-Levels <br>Maths (A) Chemistry (A*) Physics (A) Economics (B)
+						</p>
+					</div>
+					<div id="gcses" class="terminal-half-column">
+						<p>
+							<br>
+							<br>
+							GCSEs <br>
+							7A* (Maths, 3 Sciences), 2A (English), 1B (DT)
+						</p>
+					</div>
+				</div>
+			</div>
+
+		<!--<div id="flicker"></div>-->
+		
+		<!-- Loaded screen -->
+		
+		<!--
+		<div class="terminal-splash">
+			<div id="terminal-info">
+				ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM
+				<br>
+				COPYRIGHT 2075-2077 ROBCO INDUSTRIES
+				<br>
+				------------------------------------------
+			</div>
+			<!--
+			<pre>
+			
+			
+          ____        __    __________     __  ______  _____
+         / __ \____  / /_  / ____/ __ \   / / / / __ \/ ___/
+        / /_/ / __ \/ __ \/ /   / / / /  / / / / / / /\__ \ 
+       / _, _/ /_/ / /_/ / /___/ /_/ /  / /_/ / /_/ /___/ / 
+      /_/ |_|\____/_.___/\____/\____/   \____/\____//____/  
+			</pre>
+			<div class = "terminal-center-text">
+				Welcome back USER! █
+			</div>
+			-->
+			<!-- Boot sequence -->
+			<!--
+			<div id="boot-sequence">
+				<div id="boot-loading">
+					<ul id="boot-text">
+						<li>LOADING KERNEL</li>
+						<li>PROBING SYSTEM</li>
+						<li>LOADING DRIVERS</li>
+						<li>LOADING CORE</li>
+						<li>BOOTING</li>
+					</ul>
+				</div>
+				<div id="boot-ticks">
+					<ul id="boot-progress">
+						<li>✓</li>
+						<li>✓</li>
+						<li>✓</li>
+						<li>✓</li>
+						<li>✓</li>
+					</ul>
+				</div>
+			</div>
+			-->
+			
+		</div>
+		
+	</div>
+	<div id="power-button">
+		
+	</div>
+	
+</div>
+
+  <!-- JS -->
+  <script src="js/jquery-3.0.0.min.js"></script>
+  <script src="js/terminal.js"></script>
+  
+</body>
+
+</html>
