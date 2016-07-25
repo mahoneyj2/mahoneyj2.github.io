@@ -30,8 +30,8 @@ pre
 .terminal-splash
 {
 	padding-left:100px;
-	padding-right:100px;
-	padding-top:100px;
+	padding-right:130px;
+	padding-top:40px;
 }
 
 #boot-sequence
@@ -52,11 +52,22 @@ pre
 	float:right;
 
 }
+#boot-progress > li
+{
+	padding-top:2px;
+	padding-bottom:1px;
+}
+
+.loading-bar{
+	padding-top:150px;
+	white-space:pre;
+}
 
 /* Terminal Info */
 
 #terminal-info
 {
+	height:30px;
 	top:20px;
 	padding-left:20px;
 	padding-right:20px;

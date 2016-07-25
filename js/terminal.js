@@ -50,8 +50,11 @@ $(document).ready(function() {
 				<li>2.1 - 5</li> \
 				<li>2.2 - 0</li>"
 	};
+	
 	var alevels = "<p>The Judd School<br><br>A-Levels <br>Maths (A) Chemistry (A*) <br>Physics (A) Economics (B)</p>";
+	
 	var gcses= "<p><br><br>GCSEs<br>7A* (Maths, 3 Sciences), 2A <br>(English), 1B (DT)</p>";
+	
 	var defaultuniversity = "\
 					EDUCATION \
 					<p> \
@@ -67,23 +70,51 @@ $(document).ready(function() {
 					<ul id=\"module-list\"> \
 					" + module_results['total'] +" \
 					</ul> ";
+					
+	var terminal_info = "ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM\
+						<br>\
+						COPYRIGHT 2075-2077 ROBCO INDUSTRIES";
+						
+	var boot_text = "	<ul id=\"boot-text\">\
+							<li>LOADING KERNEL</li>\
+							<li>PROBING SYSTEM</li>\
+							<li>LOADING DRIVERS</li>\
+							<li>LOADING CORE</li>\
+							<li>BOOTING</li>\
+						</ul>";
+						
+	var boot_progress = "<li>✓</li>\
+						<li>✓</li>\
+						<li>✓</li>\
+						<li>✓</li>\
+						<li>✓</li>";
+						
+	var splash_text = "Welcome USER!";
 	
-	
+						
 	// global variables for page information
 	var current_year = "total";
-	var current_tab = "";
+	var current_tab = "about";
 	
-	// Initialising the nav bar click event
-	$('#nav-list > li').click(function() {
-		$('#nav-list > li').removeClass('active');
-		$(this).addClass('active');
-		selected_tab = this.id;
-		if (selected_tab == current_tab){
-			return;
-		}
-		current_tab = selected_tab;
-		generateFramework(selected_tab, generatePage);
-	});
+	//obscure contact details from lil webcrawlers
+	var emailstart = "j.h.j.mahoney";
+	var emaildomain = "@warwick.ac.uk";
+	var phonestart = "07561";
+	var phoneend = "809893";
+	
+	// Function to register onclick events for the main navbar
+	function register_navevents(){
+		$('#nav-list > li').click(function() {
+			$('#nav-list > li').removeClass('active');
+			$(this).addClass('active');
+			selected_tab = this.id;
+			if (selected_tab == current_tab){
+				return;
+			}
+			current_tab = selected_tab;
+			generateFramework(selected_tab, generatePage);
+		});
+	};
 	
 	// A function to register the onclick events for the embedded university inline nav
 	function register_universityevents(){ 
@@ -103,22 +134,97 @@ $(document).ready(function() {
 		)
 	};
 	
+	function register_contactevents(){
+		$('#email').click(
+			function() {
+				$(this).parent().html("> Email - <a href=\"mailto:\"" + emailstart + emaildomain +">" + emailstart + emaildomain + "</a>");
+			}
+		)
+		$('#phone').click(
+			function() {
+				$(this).html(phonestart + phoneend);
+			}
+		)
+	};
+	
 	// The div information for generating each pages framework
 	var framework = {
 		'about' : "",
-		'education' : "<div id=\"university\" class=\"terminal-full-column\"></div> \
+		'education' : "\
+		<div id=\"university\" class=\"terminal-full-column\"></div> \
 		<div id=\"alevel\" class=\"terminal-half-column\"></div> \
 		<div id=\"gcses\" class=\"terminal-half-column\"> \
 		",
 		'experience' : "",
 		'projects' : "",
-		'contact' : ""
+		'contact' : "",
+		'loading' : "\
+				<div class=\"terminal-splash\"> \
+					<div id=\"terminal-info\">\
+					</div>\
+					<div id=\"boot-sequence\">\
+						<div id=\"boot-loading\">\
+						</div>\
+						<div id=\"boot-ticks\">\
+							<ul id=\"boot-progress\">\
+							</ul>\
+						</div>\
+						<p class=\"loading-bar\">[                                      ]</p>\
+					</div>\
+				</div>",
+		'splash' : "\
+				<div class=\"terminal-splash\">\
+					<div id=\"terminal-info\">\
+						ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM\
+						<br>\
+						COPYRIGHT 2075-2077 ROBCO INDUSTRIES\
+					</div>\
+					<pre>"+
+"\n" + 
+"\n" + 
+"\n" +
+"\n" +
+"           ____        __    __________     __  ______  _____\n" + 
+"          / __ \\____  / /_  / ____/ __ \\   / / / / __ \\/ ___/\n" + 
+"         / /_/ / __ \\/ __ \\/ /   / / / /  / / / / / / /\\__ \\ \n" + 
+"        / _, _/ /_/ / /_/ / /___/ /_/ /  / /_/ / /_/ /___/ / \n" + 
+"       /_/ |_|\\____/_.___/\\____/\\____/   \\____/\\____//____/  \n" + 
+"\t   \n"
+					+"</pre>\
+					<div id =\"splash-text\" class = \"terminal-center-text\">\
+					</div>\
+				</div>",
+		'nav' : " \
+				<div id=\"terminal-nav\">\
+					<ul id=\"nav-list\">\
+						<li id=\"about\" class=\"active\">[ABOUT ME]</li>\
+						<li id=\"education\" class=\"\">[EDUCATION]</li>\
+						<li id=\"experience\" class=\"\">[EXPERIENCE]</li>\
+						<li id=\"projects\"class=\"\">[PROJECTS]</li>\
+						<li id=\"contact\" class=\"\">[CONTACT]</li>\
+					</ul>\
+				</div>\
+				<div id=\"inner-terminal-content\">\
+				\
+				</div>",
+		'terminal' : "\
+			<div id=\"terminal-info\">\
+				ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM\
+				<br>\
+				COPYRIGHT 2075-2077 ROBCO INDUSTRIES\
+			</div>\
+			<div id=\"terminal-content\">\
+				<div id=\"inner-terminal-content\">\
+				</div>\
+			</div>",
+		'empty' : "	\
+			<div id=\"terminal-content\">\
+				<div id=\"inner-terminal-content\"></div>\
+			</div>"
 	}
 	
 	// Generates the divs of each page and callbacks on the page generating function
 	function generateFramework(tab,callback){
-		var test = framework[tab];
-		var test2 = document.getElementById("inner-terminal-content").innerHTML;
 		document.getElementById("inner-terminal-content").innerHTML = framework[tab];
 		callback(tab);
 	}
@@ -136,9 +242,18 @@ $(document).ready(function() {
 		else if (tab == "projects"){
 			
 		}
+		else if (tab == "loading"){
+			fillLoadingBar(34,100)();
+			typerfunction(terminal_info, 'terminal-info', 10)();
+			typerfunction(boot_text,'boot-loading', 10)();
+			typerfunction(boot_progress, 'boot-progress',100, loadSplashScreen)();
+		}
+		else if (tab == "splash"){
+			typerfunction(splash_text, "splash-text",50)();
+		}
 	}
 	
-	// Generates a typing function with relevant html and div information
+	// Generates a typing function with relevant html & div information, and callback for event registering
 	function typerfunction(html, id, delay, callback){
 		var i = 0;
 		var runbefore = false;
@@ -149,14 +264,14 @@ $(document).ready(function() {
 				i=0;
 			}
 			text = html.slice(0, ++i);
+			document.getElementById(id).innerHTML = text;
+
 			if (text === html) {
 				runbefore=true;
 				if (callback) callback();
 				return;
 			}
-			
-			document.getElementById(id).innerHTML = text;
-
+		
 			var char = text.slice(-1);
 			if( char === '<' ) isTag = true;
 			if( char === '>' ) isTag = false;
@@ -165,5 +280,87 @@ $(document).ready(function() {
 			setTimeout(type, delay);
 		};
 	}
+	
+	function fillLoadingBar(size,delay){
+		var i = 0;
+		var spaces = "";
+		var bar = ">";
+		for (var j = 0; j < size-1; j++){
+			spaces += ' ';
+		}
+		return function loading(){
+			var string = "["+ bar + spaces + "]";
+			if (i == size){
+				bar = bar.slice(0,-1);
+				string = "[" + bar + "]";
+				$(".loading-bar").html(string);
+				return;
+			}
+			$(".loading-bar").html(string);
+			bar = "=" + bar;
+			spaces = spaces.slice(0,-1);
+			i++;
+			setTimeout(loading, delay)
+		}
+	}
+	
+	function buttonOn(){
+		$('#power-button').unbind('click');
+		$('#power-button').click(powerOn);
+	};
+	
+	function buttonOff(){
+		$('#power-button').unbind('click');
+		$('#power-button').click(powerOff);
+	};
+	
+	function buttonDisabled(){
+		$('#power-button').unbind('click');
+	}
+	
+	function powerOn(){
+		
+		//Change background image
+		
+		//Disable button until loaded
+		buttonDisabled();
+		//Load boot sequence
+		generateFramework("loading", generatePage);
+	}
+	
+	function powerOff(){
+		//Change background image
+		
+		//Generate empty terminal
+		$('#terminal').html(framework['empty']);
+		//Change button to powerOn
+		buttonOn();
+	}
+	
+	function generateNav(callback){
+		document.getElementById("terminal").innerHTML = framework["terminal"]
+		document.getElementById("terminal-content").innerHTML = framework["nav"];
+		callback(current_tab);
+	}
+	
+	function generateSplash(){
+		generateFramework("splash", generatePage);
+	}
+	
+	function initialisePage(){
+		generateNav(register_navevents);
+		generateFramework(current_tab, generatePage);
+		// Enable button again
+		buttonOff();
+	}
+	
+	function loadSplashScreen(){
+			setTimeout(generateSplash,1500);
+			setTimeout(initialisePage, 4000);
+	}
+	
+	//Actual execution
+	
+	buttonOn();
 	
 });
