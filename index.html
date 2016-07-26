@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="utf-8">
+	<title>Terminal</title>
+	<meta name="description" content="Fallout Terminal">
+	<meta name="author" content="James Mahoney">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta charset="utf-8">
-  <title>Terminal</title>
-  <meta name="description" content="Fallout Terminal">
-  <meta name="author" content="James Mahoney">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- CSS -->
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/terminal.css">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/terminal.css">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="images/favicon.ico">
-  
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="images/favicon.ico">
 </head>
+
 <body>
 	<div id="terminal-container">
 		<!--<div id="flash"></div>-->
 		<div id="terminal">
 			<!-- Main screen -->
 			<div id="terminal-content">
-				<div id="inner-terminal-content"></div>
+				<div id="inner-terminal-content">
+				</div>
 			</div>
 		</div>
 	</div>
 	<div id="power-button"></div>
-
-			
-			<!--
-			<div id="terminal-content">
-				<div id="terminal-nav">
+	<!--
+					<div id="terminal-nav">
 					<ul id="nav-list">
 						<li id="about" class="">[ABOUT ME]</li>
 						<li id="education" class="">[EDUCATION]</li>
@@ -40,168 +37,90 @@
 						<li id="contact" class="">[CONTACT]</li>
 					</ul>
 				</div>
-				<div id="inner-terminal-content">
 				
-				</div>
-			</div>
-			-->
-					<!--
-					<div id="contact-info" class="terminal-full-column">
-						CONTACT
+						<ul id="experience-nav" class="inline-nav"> 
+						<li id="university-tab" class="active success">[WARWICKTECH]<li>
+						<li id="internship-tab" class="success">[INTERNSHIPS]</li>
+						<li id="misc-tab" class="success">[MISC]</li>
+					</ul>
+					<div id="warwicktech" class="terminal-full-column">
+					
+						<a target="_blank" href="http://warwick.tech">eTech Solutions</a>
 						<p>
-							Noone likes getting their details taken by webcrawlers! <br>
-							Just click the links below to reveal the information!
+							Software Development Summer Intern (2016)
+						</p>
+						<p> 
+							eTech rules! eTech was a really dynamic and exciting environment for 
+							working which has really enthused me to working in the Software Development
+							industry. The team structure was really dynamic, with regular standup and scrum
+							meetings, and my time here offered me some amazing real-world experience working 
+							on deployed systems, allowing me to develop my skills further from University.
+						</p>
+						<p>
+							During my time at eTech, I worked on a number of different technologies, 
+							with some of the main areas being:
 						</p>
 						<ul>
-							<li>> Email - <a id="email" href="javascript:void(0)">CLICK HERE</a></li>
-							<li>> Phone - <a id="phone" href="javascript:void(0)">CLICK HERE</a></li>
-						</ul>
-						<ul>
-							<li>OTHER LINKS</li>
-							<li>> <a href="https://github.com/mahoneyj2">GitHub</a></li>
-							<li>> <a href="https://www.facebook.com/jamie.mahoney.12">Facebook</a></li>
-						</ul>
-						<p>
-						Wubba, lubba, dub, dub!
-						</p>
-					</div>
-					-->
-					<!--
-					<div id="about-info" class="terminal-full-column">
-						ABOUT ME
-						<p>
-							James H. J. Mahoney
-						</p>
-						<ul>
-							<li>CURRENT STATUS</li>
-							<li>> 4th year Computer Science student @ <a href="https://www2.warwick.ac.uk/">Warwick University</a></li>
-							<li>> Technical lead for <a href="http://warwick.tech">WarwickTECH</a><li>
-							<li>> Currently interning in Development @ <a href="http://etech.net/">eTech</a> </li>
-							<li><br></li>
-							<li class="success">> Looking for job opportunities in Software Engineering</li>
-						</ul>
-						BIOGRAPHY
-						<p>
-						I'm a hard working Computer science student with a passion for my subject. 
-						I enjoy a challenge - motivated by a passion for finding solutions & solving problems efficiently.
-						I also love getting riggidy riggidy rekt son!
-						</p>
-						<ul>
-							<li>Here's my CV, so hire me, maybe?</li>
-							<li>> <a href="http://warwick.tech">Resume PDF</a><li>
-							<li>> <a href="https://github.com/mahoneyj2">GitHub</a> </li>
-						</ul>
-					</div>
-					-->
-					<!-- 
-					<div id="university" class="terminal-full-column">
-						EDUCATION
-						<p>
-							University of Warwick - Computer Science MEng
-						</p>
-						<ul id="year-nav" class="inline-nav">
-							<li id="year1" class="success">[YEAR 1]</li>
-							<li id="year2" class="success">[YEAR 2]</li>
-							<li id="year3" class="success">[YEAR 3]</li> 
-							<li id="year4" class="awaiting">[YEAR 4]</li>
-							<li id="total" class="awaiting active">[TOTAL]</li>
-						</ul>
-						<ul id="module-list">
-							<li><pre>[========================>        ]</pre></li>
-							<li>CURRENT STATUS - <a class="awaiting">IN PROGRESS (YEAR 4)</a></li>
-							<br>
-							<li>AVERAGE MARK - 78.43%</li>
-							<br>
-							<li>MODULE GRADES:</li>
-							<li>1st - 18</li>
-							<li>2.1 - 5</li>
-							<li>2.2 - 0</li>
-						</ul>
-						<ul id="module-list">
-							<li>FIRST CLASS HONOURS - 78.3%</li>
-							<li>---------------------------</li>
-							<li>MODULE RESULTS</li>
-							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs325/">Compiler Design</a> - 91%</li>
-							<li>> <a href="">3rd Year Project</a> - 72% </li>
-							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs349/">Principles of Programming Languages</a> - 93%</li>
-							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs342/">Machine Learning</a> - 84%</li>
-							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs346/">Advanced Databases</a> - 66%</li>
-							<li>> <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs313/">Mobile Robotics</a> - 81%</li>
-							<li>> <a target="_blank" href="http://www2.warwick.ac.uk/services/aro/dar/quality/modules/ib382/">Project Management</a> - 67%</li>
+							<li>> Contributions to Hangfire, a C# background job performer</li>
+							<li>> JS</li>
 							<li>> </li>
+							<li>> <li>
 						</ul>
 					</div>
-					<div id="alevel" class="terminal-half-column">
+					<div id="warwicktech" class="terminal-full-column">
+					
+						<a target="_blank" href="http://warwick.tech">WarwickTECH society</a>
 						<p>
-							The Judd School
-							<br>
-							<br>
-							A-Levels <br>Maths (A) Chemistry (A*) Physics (A) Economics (B)
+							Lead Technical (2014-2016)
+						</p>
+						<p> WarwickTECH is a student run tech society at Warwick University in which I 
+							have been a member of the lead team for since its conception in 2014. We represent
+							the combination of both technical skills and entrepreneurship and host a 
+							variety of events aimed at both areas.
+						</p>
+						Responsibilities included (but not limited to)
+						<ul>
+							<li>> Creating and maintaining the WarwickTECH site</li>
+							<li>> Creating WarwickHACK landing pages and resource hubs</li>
+							<li>> Organising and running our multiple Hackathon events</li>
+							<li>> Mentoring at Coding workshops<li>
+						</ul>
+						<p>
+							Come check us out!
+							<ul>
+								<li><a target="_blank" href="https://www.facebook.com/warwicktech">Facebook</a></li>
+								<li><a target="_blank" href="https://www.linkedin.com/company/warwicktech">LinkedIn</a></li>
+							</ul>
 						</p>
 					</div>
-					<div id="gcses" class="terminal-half-column">
-						<p>
-							<br>
-							<br>
-							GCSEs <br>
-							7A* (Maths, 3 Sciences), 2A (English), 1B (DT)
-						</p>
-					</div> -->
-		<!--<div id="flicker"></div>-->
-		
-		<!-- Loaded screen -->
-		
-		<!--
-		<div class="terminal-splash">
-			<div id="terminal-info">
-				ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM
-				<br>
-				COPYRIGHT 2075-2077 ROBCO INDUSTRIES
-				<br>
-				------------------------------------------
-			</div>
-			<!--
-			<pre>
-			
-			
-          ____        __    __________     __  ______  _____
-         / __ \____  / /_  / ____/ __ \   / / / / __ \/ ___/
-        / /_/ / __ \/ __ \/ /   / / / /  / / / / / / /\__ \ 
-       / _, _/ /_/ / /_/ / /___/ /_/ /  / /_/ / /_/ /___/ / 
-      /_/ |_|\____/_.___/\____/\____/   \____/\____//____/  
-			</pre>
-			<div class = "terminal-center-text">
-				Welcome back USER! █
-			</div>
-			-->
-			<!-- Boot sequence -->
-			<!--
-			<div id="boot-sequence">
-				<div id="boot-loading">
-					<ul id="boot-text">
-						<li>LOADING KERNEL</li>
-						<li>PROBING SYSTEM</li>
-						<li>LOADING DRIVERS</li>
-						<li>LOADING CORE</li>
-						<li>BOOTING</li>
-					</ul>
-				</div>
-				<div id="boot-ticks">
-					<ul id="boot-progress">
-						<li>✓</li>
-						<li>✓</li>
-						<li>✓</li>
-						<li>✓</li>
-						<li>✓</li>
-					</ul>
-				</div>
-			</div>
-			-->
+	-->
+				<!--<div id="warwicktech" class="terminal-full-column">
+					
+						<a href="http://warwick.tech">Deutsche Bank project</a>
 
-  <!-- JS -->
-  <script src="js/jquery-3.0.0.min.js"></script>
-  <script src="js/terminal.js"></script>
-  
+						<p> 
+							As part of a team in 2nd year, we implemented a system for realtime detection of malicious trading 
+							from a stream of trades and emails. We worked using an agile framework, undertaking regular SCRUM
+						</p>
+					</div>-->
+					
+				<!--<div id="biography" class="terminal-full-column">
+						<a href="http://warwick.tech">eTech solutions</a>
+						<p>
+							Summer Intern (2016)
+						</p>
+					</div>
+					<div id="biography" class="terminal-full-column">
+						<a href="http://sayersb.co.uk">Sayers Butterworth</a>
+						<p>
+							Summer Intern (2011,2012)
+						</p>
+						<p>
+							Yo yo yo its ya boi Jamie Mahoney
+						</p>
+					</div>-->
+	<script src="js/jquery-3.0.0.min.js"></script>
+	<script src="js/terminal.js"></script>
 </body>
 
 </html>

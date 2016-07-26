@@ -1,5 +1,230 @@
 $(document).ready(function() {
 	
+	// Functions for registering onclick events {
+	
+		// Register onclick events for the main navbar
+		function register_navevents(){
+			$('#nav-list > li').click(function() {
+				$('#nav-list > li').removeClass('active');
+				$(this).addClass('active');
+				selected_tab = this.id;
+				if (selected_tab == current_tab){
+					return;
+				}
+				current_tab = selected_tab;
+				generateFramework(selected_tab, generatePage);
+			});
+		};
+		
+		// Register the onclick events for the embedded university inline nav
+		function register_universityevents(){ 
+			$('#year-nav > li').click(
+				function() {
+					$(this).siblings().removeClass('active');
+					$(this).addClass('active');
+					
+					var selected_year = this.id;
+					if (current_year == selected_year) {
+						return;
+					}
+					current_year = selected_year;
+					var module_result = module_results[selected_year];
+					$('#module-list').html(module_result);
+				}
+			)
+		};
+		
+		// Register the onclick events on contact page
+		function register_contactevents(){
+			$('#email').click(
+				function() {
+					$(this).parent().html("> Email - <a href=\"mailto:" + emailstart + emaildomain +"\">" + emailstart + emaildomain + "</a>");
+				}
+			)
+			$('#phone').click(
+				function() {
+					$(this).html(phonestart + phoneend);
+				}
+			)
+		};
+		
+		// Unbinds other events and registers the powerOn function to the button
+		function buttonOn(){
+			$('#power-button').unbind('click');
+			$('#power-button').click(powerOn);
+		};
+		
+		// Unbinds other events and registers the powerOff function to the button
+		function buttonOff(){
+			$('#power-button').unbind('click');
+			$('#power-button').click(powerOff);
+		};
+		
+		// Unbinds other events on the button
+		function buttonDisabled(){
+			$('#power-button').unbind('click');
+		};
+		
+	// }
+	
+	// Functions for generating Frameworks and Page information {
+	
+		// Generates the divs of each page and callbacks on the page generating function
+		function generateFramework(tab,callback){
+			document.getElementById("inner-terminal-content").innerHTML = framework[tab];
+			callback(tab);
+		}
+		
+		// Generates the main nav bar for the page, callback to register events
+		function generateNav(callback){
+			document.getElementById("terminal").innerHTML = framework["terminal"];
+			document.getElementById("terminal-content").innerHTML = framework["nav"];
+			callback(current_tab);
+		}
+		
+		// Generates the page using the typerfunction which simulates typing
+		function generatePage(tab){
+			if (tab == "education"){
+				typerfunction(defaultuniversity, 'university', 5, register_universityevents)();
+				typerfunction(alevels, 'alevel',10)();
+				typerfunction(gcses, 'gcses',10)();
+			} 
+			else if (tab == "about"){
+				typerfunction(about, 'about-info',5)();
+				typerfunction(biography, 'biography', 5)();
+			}
+			else if (tab == "contact"){
+				typerfunction(contact, 'contact-info',5,register_contactevents)();
+			}
+			else if (tab == "experience"){
+				
+			}
+			else if (tab == "projects"){
+				
+			}
+			else if (tab == "loading"){
+				fillLoadingBar(34,100)();
+				typerfunction(terminal_info, 'terminal-info', 10)();
+				typerfunction(boot_text,'boot-loading', 10)();
+				typerfunction(boot_progress, 'boot-progress',100, loadSplashScreen)();
+			}
+			else if (tab == "splash"){
+				typerfunction(splash_text, "splash-text",50)();
+			}
+		};
+		
+		// Loads the splash screen after a delay, then loads the initial page ("about") 
+		function loadSplashScreen(){
+				setTimeout(function(){
+					generateFramework("splash", generatePage)
+					},1500);
+				setTimeout(initialisePage, 4000);
+		};
+		
+		// Initialises the page on the main site, after loading
+		function initialisePage(){
+			current_tab = "about";
+			generateNav(register_navevents);
+			generateFramework(current_tab, generatePage);
+			// Enable button again
+			buttonOff();
+		};
+	
+	// }
+	
+	// Pretty misc functions {
+		
+		// Generates a typing function with relevant html & div information, and callback for event registering
+		function typerfunction(html, id, delay, callback){
+			var i = 0;
+			var runbefore = false;
+			var isTag = false;
+			return function type() {
+				if (runbefore) {
+					runbefore=false;
+					i=0;
+				}
+				text = html.slice(0, ++i);
+				document.getElementById(id).innerHTML = text;
+
+				if (text === html) {
+					runbefore=true;
+					if (callback) callback();
+					return;
+				}
+			
+				var char = text.slice(-1);
+				if( char === '<' ) isTag = true;
+				if( char === '>' ) isTag = false;
+
+				if (isTag) return type();
+				setTimeout(type, delay);
+			};
+		};
+		
+		// Fills loading bars on the page with a parameter size and delay
+		function fillLoadingBar(size,delay){
+			var i = 0;
+			var spaces = "";
+			var bar = ">";
+			for (var j = 0; j < size-1; j++){
+				spaces += ' ';
+			}
+			return function loading(){
+				var string = "["+ bar + spaces + "]";
+				if (i == size){
+					bar = bar.slice(0,-1);
+					string = "[" + bar + "]";
+					$(".loading-bar").html(string);
+					return;
+				}
+				$(".loading-bar").html(string);
+				bar = "=" + bar;
+				spaces = spaces.slice(0,-1);
+				i++;
+				setTimeout(loading, delay)
+			};
+		};
+	
+	// }
+	
+	// Page constructors / destructors {
+	
+		// Initiates the page loading process, changing bg and generating framework
+		function powerOn(){
+			
+			//Change background image
+			
+			
+			//Disable button until loaded
+			buttonDisabled();
+			
+			//Load boot sequence
+			generateFramework("loading", generatePage);
+		};
+		
+		// Returns the page to the 'off' state, resetting HTML changes and changing bg
+		function powerOff(){
+			
+			//Change background image
+			
+			
+			//Generate empty terminal
+			$('#terminal').html(framework['empty']);
+			
+			//Change button to powerOn
+			buttonOn();
+		};
+		
+	// }
+		
+	// Actual execution
+	
+	buttonOn();
+	
+	
+	// Framework, page and general HTML information
+	
 	// Education page text
 	var module_results = {
 		'year1': 				 " \
@@ -71,6 +296,49 @@ $(document).ready(function() {
 					" + module_results['total'] +" \
 					</ul> ";
 					
+	var contact = "					CONTACT\
+						<p>\
+							Noone likes getting their details taken by webcrawlers! <br>\
+							Just click the links below to reveal the information!\
+						</p>\
+						<ul>\
+							<li>> Email - <a id=\"email\" href=\"javascript:void(0)\">CLICK HERE</a></li>\
+							<li>> Phone - <a id=\"phone\" href=\"javascript:void(0)\">CLICK HERE</a></li>\
+						</ul>\
+						<ul>\
+							<li>OTHER LINKS</li>\
+							<li>> <a target=\"_blank\" href=\"https://github.com/mahoneyj2\">GitHub</a></li>\
+							<li>> <a target=\"_blank\" href=\"https://www.facebook.com/jamie.mahoney.12\">Facebook</a></li>\
+						</ul>\
+						<p>\
+						Wubba, lubba, dub, dub!\
+						</p>";
+					
+	var about = "\
+					ABOUT ME\
+						<p>\
+							James H. J. Mahoney\
+						</p>\
+						<ul>\
+							<li>CURRENT STATUS</li>\
+							<li>> 4th year Computer Science student @ <a target=\"_blank\" href=\"https://www2.warwick.ac.uk/\">Warwick University</a></li>\
+							<li>> Technical lead for <a target=\"_blank\" href=\"http://warwick.tech\">WarwickTECH</a><li>\
+							<li>> Currently interning in Development @ <a target=\"_blank\" href=\"http://etech.net/\">eTech</a> </li>\
+							<li><br></li>\
+							<li class=\"success\">> Looking for job opportunities in Software Engineering</li>\
+						</ul>";
+						
+	var biography = "\
+						BIOGRAPHY\
+						<p>\
+						I\'m a hard working Computer science student with a passion for my subject.\
+						I enjoy a challenge - motivated by a passion for finding solutions & solving problems efficiently.\
+						</p>\
+						<ul>\
+							<li>Here\'s my CV, so hire me, maybe?</li>\
+							<li>> <a target=\"_blank\" href=\"http://warwick.tech\">Resume PDF</a><li>\
+							<li>> <a target=\"_blank\" href=\"https://github.com/mahoneyj2\">GitHub</a> </li>\
+						</ul>";
 	var terminal_info = "ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM\
 						<br>\
 						COPYRIGHT 2075-2077 ROBCO INDUSTRIES";
@@ -91,7 +359,6 @@ $(document).ready(function() {
 						
 	var splash_text = "Welcome USER!";
 	
-						
 	// global variables for page information
 	var current_year = "total";
 	var current_tab = "about";
@@ -102,54 +369,10 @@ $(document).ready(function() {
 	var phonestart = "07561";
 	var phoneend = "809893";
 	
-	// Function to register onclick events for the main navbar
-	function register_navevents(){
-		$('#nav-list > li').click(function() {
-			$('#nav-list > li').removeClass('active');
-			$(this).addClass('active');
-			selected_tab = this.id;
-			if (selected_tab == current_tab){
-				return;
-			}
-			current_tab = selected_tab;
-			generateFramework(selected_tab, generatePage);
-		});
-	};
-	
-	// A function to register the onclick events for the embedded university inline nav
-	function register_universityevents(){ 
-		$('#year-nav > li').click(
-			function() {
-				$(this).siblings().removeClass('active');
-				$(this).addClass('active');
-				
-				var selected_year = this.id;
-				if (current_year == selected_year) {
-					return;
-				}
-				current_year = selected_year;
-				var module_result = module_results[selected_year];
-				$('#module-list').html(module_result);
-			}
-		)
-	};
-	
-	function register_contactevents(){
-		$('#email').click(
-			function() {
-				$(this).parent().html("> Email - <a href=\"mailto:\"" + emailstart + emaildomain +">" + emailstart + emaildomain + "</a>");
-			}
-		)
-		$('#phone').click(
-			function() {
-				$(this).html(phonestart + phoneend);
-			}
-		)
-	};
-	
 	// The div information for generating each pages framework
 	var framework = {
-		'about' : "",
+		'about' : "<div id=\"about-info\" class=\"terminal-full-column\"></div>\
+				   <div id=\"biography\" class=\"terminal-full-column\"></div>",
 		'education' : "\
 		<div id=\"university\" class=\"terminal-full-column\"></div> \
 		<div id=\"alevel\" class=\"terminal-half-column\"></div> \
@@ -157,7 +380,8 @@ $(document).ready(function() {
 		",
 		'experience' : "",
 		'projects' : "",
-		'contact' : "",
+		'contact' : "\
+					<div id=\"contact-info\" class=\"terminal-full-column\"></div>",
 		'loading' : "\
 				<div class=\"terminal-splash\"> \
 					<div id=\"terminal-info\">\
@@ -221,146 +445,5 @@ $(document).ready(function() {
 			<div id=\"terminal-content\">\
 				<div id=\"inner-terminal-content\"></div>\
 			</div>"
-	}
-	
-	// Generates the divs of each page and callbacks on the page generating function
-	function generateFramework(tab,callback){
-		document.getElementById("inner-terminal-content").innerHTML = framework[tab];
-		callback(tab);
-	}
-	
-	// Generates the page using the typerfunction which simulates typing!
-	function generatePage(tab){
-		if (tab == "education"){
-			typerfunction(defaultuniversity, 'university', 1, register_universityevents)();
-			typerfunction(alevels, 'alevel',20)();
-			typerfunction(gcses, 'gcses',20)();
-		} 
-		else if (tab == "experience"){
-			
-		}
-		else if (tab == "projects"){
-			
-		}
-		else if (tab == "loading"){
-			fillLoadingBar(34,100)();
-			typerfunction(terminal_info, 'terminal-info', 10)();
-			typerfunction(boot_text,'boot-loading', 10)();
-			typerfunction(boot_progress, 'boot-progress',100, loadSplashScreen)();
-		}
-		else if (tab == "splash"){
-			typerfunction(splash_text, "splash-text",50)();
-		}
-	}
-	
-	// Generates a typing function with relevant html & div information, and callback for event registering
-	function typerfunction(html, id, delay, callback){
-		var i = 0;
-		var runbefore = false;
-		var isTag = false;
-		return function type() {
-			if (runbefore) {
-				runbefore=false;
-				i=0;
-			}
-			text = html.slice(0, ++i);
-			document.getElementById(id).innerHTML = text;
-
-			if (text === html) {
-				runbefore=true;
-				if (callback) callback();
-				return;
-			}
-		
-			var char = text.slice(-1);
-			if( char === '<' ) isTag = true;
-			if( char === '>' ) isTag = false;
-
-			if (isTag) return type();
-			setTimeout(type, delay);
-		};
-	}
-	
-	function fillLoadingBar(size,delay){
-		var i = 0;
-		var spaces = "";
-		var bar = ">";
-		for (var j = 0; j < size-1; j++){
-			spaces += ' ';
-		}
-		return function loading(){
-			var string = "["+ bar + spaces + "]";
-			if (i == size){
-				bar = bar.slice(0,-1);
-				string = "[" + bar + "]";
-				$(".loading-bar").html(string);
-				return;
-			}
-			$(".loading-bar").html(string);
-			bar = "=" + bar;
-			spaces = spaces.slice(0,-1);
-			i++;
-			setTimeout(loading, delay)
-		}
-	}
-	
-	function buttonOn(){
-		$('#power-button').unbind('click');
-		$('#power-button').click(powerOn);
 	};
-	
-	function buttonOff(){
-		$('#power-button').unbind('click');
-		$('#power-button').click(powerOff);
-	};
-	
-	function buttonDisabled(){
-		$('#power-button').unbind('click');
-	}
-	
-	function powerOn(){
-		
-		//Change background image
-		
-		//Disable button until loaded
-		buttonDisabled();
-		//Load boot sequence
-		generateFramework("loading", generatePage);
-	}
-	
-	function powerOff(){
-		//Change background image
-		
-		//Generate empty terminal
-		$('#terminal').html(framework['empty']);
-		//Change button to powerOn
-		buttonOn();
-	}
-	
-	function generateNav(callback){
-		document.getElementById("terminal").innerHTML = framework["terminal"]
-		document.getElementById("terminal-content").innerHTML = framework["nav"];
-		callback(current_tab);
-	}
-	
-	function generateSplash(){
-		generateFramework("splash", generatePage);
-	}
-	
-	function initialisePage(){
-		generateNav(register_navevents);
-		generateFramework(current_tab, generatePage);
-		// Enable button again
-		buttonOff();
-	}
-	
-	function loadSplashScreen(){
-			setTimeout(generateSplash,1500);
-			setTimeout(initialisePage, 4000);
-	}
-	
-	//Actual execution
-	
-	buttonOn();
-	
 });
