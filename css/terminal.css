@@ -75,6 +75,15 @@ pre
 	text-align:center;
 }
 
+#power-button-info
+{
+	position:absolute;
+	top:425px;
+	left:580px;
+	text-align:center;
+	height:30px;
+}
+
 /* Terminal Navbar */
 
 #terminal-nav

@@ -16,6 +16,23 @@ $(document).ready(function() {
 			});
 		};
 		
+		// Register the onclick events for the embedded experience inline nav
+		function register_experienceevents(){ 
+			$('#experience-nav > li').click(
+				function() {
+					$(this).siblings().removeClass('active');
+					$(this).addClass('active');
+					
+					var selected = this.id;
+					if (current_experience == selected) {
+						return;
+					}
+					current_experience = selected;
+					$('#inner-experience-content').html(experiences[selected]);
+				}
+			)
+		};
+		
 		// Register the onclick events for the embedded university inline nav
 		function register_universityevents(){ 
 			$('#year-nav > li').click(
@@ -28,8 +45,7 @@ $(document).ready(function() {
 						return;
 					}
 					current_year = selected_year;
-					var module_result = module_results[selected_year];
-					$('#module-list').html(module_result);
+					$('#module-list').html(module_results[selected_year]);
 				}
 			)
 		};
@@ -51,18 +67,66 @@ $(document).ready(function() {
 		// Unbinds other events and registers the powerOn function to the button
 		function buttonOn(){
 			$('#power-button').unbind('click');
-			$('#power-button').click(powerOn);
+			$('#power-button').click(function(){
+				// do a little terminal flash or something cool
+				 setTimeout(powerOn,500);
+			});
 		};
 		
 		// Unbinds other events and registers the powerOff function to the button
 		function buttonOff(){
+			$('#power-button').prop('disabled',false);
 			$('#power-button').unbind('click');
-			$('#power-button').click(powerOff);
+			$('#power-button').click(
+				function(){
+					if (!$(this).prop('disabled')){
+						$(this).prop('disabled', true);
+						setTimeout(
+							function(){
+								$('#terminal').append(power_info['shutdown']);
+							}
+							, 100
+						);
+						
+						// do a little flash
+						setTimeout(
+							function(){
+								$('#power-button-info').remove();
+								$('#power-button').prop('disabled',false);
+								powerOff();
+							}
+							, 2000
+						);
+					}
+				}
+			);
 		};
 		
 		// Unbinds other events on the button
 		function buttonDisabled(){
+			$('#power-button').prop('disabled',false);
 			$('#power-button').unbind('click');
+			$('#power-button').click(
+				function(){
+						if (!$(this).prop('disabled')){
+							$(this).prop('disabled', true);
+							setTimeout(
+								function(){
+									$('#terminal').append(power_info['booting']);
+								}
+								, 100
+							);
+							// toggle off after short period
+							setTimeout(
+								function(){
+									$('#power-button-info').remove();
+									$('#power-button').prop('disabled',false);
+								}
+								, 1000
+							);
+						}
+				}
+			);
 		};
 		
 	// }
@@ -85,7 +149,7 @@ $(document).ready(function() {
 		// Generates the page using the typerfunction which simulates typing
 		function generatePage(tab){
 			if (tab == "education"){
-				typerfunction(defaultuniversity, 'university', 5, register_universityevents)();
+				typerfunction(defaultuniversity, 'university', 2, register_universityevents)();
 				typerfunction(alevels, 'alevel',10)();
 				typerfunction(gcses, 'gcses',10)();
 			} 
@@ -97,7 +161,7 @@ $(document).ready(function() {
 				typerfunction(contact, 'contact-info',5,register_contactevents)();
 			}
 			else if (tab == "experience"){
-				
+				typerfunction(defaultexperience, 'experience-content', 2, register_experienceevents)();
 			}
 			else if (tab == "projects"){
 				
@@ -145,7 +209,14 @@ $(document).ready(function() {
 					i=0;
 				}
 				text = html.slice(0, ++i);
-				document.getElementById(id).innerHTML = text;
+				var element = document.getElementById(id);
+				
+				if (!element){
+					// element was removed
+					return;
+				}
+				
+				element.innerHTML = text;
 
 				if (text === html) {
 					runbefore=true;
@@ -222,9 +293,22 @@ $(document).ready(function() {
 	
 	buttonOn();
 	
+	// global variables for page information
+	var current_year = "total";
+	var current_tab = "about";
+	var current_experience = "warwicktech";
 	
 	// Framework, page and general HTML information
 	
+	var power_info = {
+		'shutdown' : "\
+			<div id=\"power-button-info\">\
+				<a class=\"awaiting\">SHUTTING DOWN</a>\
+			</div>",
+		'booting' : "<div id=\"power-button-info\">\
+				<a class=\"awaiting\">DO NOT POWER IN BOOT</a>\
+			</div>"
+	}
 	// Education page text
 	var module_results = {
 		'year1': 				 " \
@@ -247,7 +331,7 @@ $(document).ready(function() {
 				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs256/\">Functional Programming</a> - 65\% </li> \
 				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs349/\">Advanced Computer Architecture</a> - 86\%</li> \
 				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs258/\">Database Systems</a> - 88\%</li> \
-				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs259/\">Formal Languages</a> - 66\%</li> \
+				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs259/\">Formal Languages</a> - 78\%</li> \
 				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs260/\">Algorithms</a> - 69\%</li> \
 				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs261/\">Software Engineering</a> - 74\%</li> \
 				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs262/\">Logic and Verification</a> - 86\%</li>",
@@ -292,10 +376,28 @@ $(document).ready(function() {
 						<li id=\"year4\" class=\"awaiting\">[YEAR 4]</li> \
 						<li id=\"total\" class=\"awaiting active\">[TOTAL]</li> \
 					</ul> \
-					<ul id=\"module-list\"> \
-					" + module_results['total'] +" \
-					</ul> ";
-					
+					<ul id=\"module-list\">"
+					+ module_results['total'] +"</ul>";
+	
+	var experiences = {
+		'warwicktech' : "",
+		'internship' : "",
+		'university' : "",
+		'misc' : ""
+	};
+
+	
+	var defaultexperience = "\
+					EXPERIENCE \
+					<ul id=\"experience-nav\" class=\"inline-nav\">\
+						<li id=\"warwicktech\" class=\"active success\">[WARWICKTECH]<li>\
+						<li id=\"internship\" class=\"success\">[INTERNSHIPS]</li>\
+						<li id=\"university\" class=\"success\">[UNIVERSITY]</li>\
+						<li id=\"misc\" class=\"success\">[MISC]</li>\
+					</ul>\
+					<div id=\"inner-experience-content\">" 
+					+ experiences[current_experience] + "</div>";
+	
 	var contact = "					CONTACT\
 						<p>\
 							Noone likes getting their details taken by webcrawlers! <br>\
@@ -359,10 +461,6 @@ $(document).ready(function() {
 						
 	var splash_text = "Welcome USER!";
 	
-	// global variables for page information
-	var current_year = "total";
-	var current_tab = "about";
-	
 	//obscure contact details from lil webcrawlers
 	var emailstart = "j.h.j.mahoney";
 	var emaildomain = "@warwick.ac.uk";
@@ -378,7 +476,7 @@ $(document).ready(function() {
 		<div id=\"alevel\" class=\"terminal-half-column\"></div> \
 		<div id=\"gcses\" class=\"terminal-half-column\"> \
 		",
-		'experience' : "",
+		'experience' : "<div id=\"experience-content\" class=\"terminal-full-column\"></div>",
 		'projects' : "",
 		'contact' : "\
 					<div id=\"contact-info\" class=\"terminal-full-column\"></div>",
