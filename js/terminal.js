@@ -161,7 +161,7 @@ $(document).ready(function() {
 				typerfunction(contact, 'contact-info',5,register_contactevents)();
 			}
 			else if (tab == "experience"){
-				typerfunction(defaultexperience, 'experience-content', 2, register_experienceevents)();
+				typerfunction(defaultexperience, 'experience-content', 1, register_experienceevents)();
 			}
 			else if (tab == "projects"){
 				
@@ -380,7 +380,30 @@ $(document).ready(function() {
 					+ module_results['total'] +"</ul>";
 	
 	var experiences = {
-		'warwicktech' : "",
+		'warwicktech' : "\
+					<div id=\"warwicktech\" class=\"terminal-full-column\">\
+						<a target=\"_blank\" href=\"http://warwick.tech\">WarwickTECH society</a>\
+						<p>\
+							Lead Technical (2014-2016)\
+						</p>\
+						<p> Founded in 2014, WarwickTECH is a BCS accredited student society at Warwick University \
+							which focuses on developing a platform for entrepeneurs and tech innovators through our \
+							through our large variety of events.\
+						</p>\
+						Responsibilities included (but not limited to)\
+						<ul>\
+							<li>> Creating and maintaining a variety of web resources</li>\
+							<li>> Organising and running our multiple Hackathon events</li>\
+							<li>> Mentoring at Coding workshops<li>\
+						</ul>\
+						<p>\
+							Come check us out!\
+							<ul>\
+								<li><a target=\"_blank\" href=\"https://www.facebook.com/warwicktech\">Facebook</a></li>\
+								<li><a target=\"_blank\" href=\"https://www.linkedin.com/company/warwicktech\">LinkedIn</a></li>\
+							</ul>\
+						</p>\
+					</div>",
 		'internship' : "",
 		'university' : "",
 		'misc' : ""
