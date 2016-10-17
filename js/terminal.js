@@ -1,7 +1,7 @@
 $(document).ready(function() {
-	
+
 	// Functions for registering onclick events {
-	
+
 		// Register onclick events for the main navbar
 		function register_navevents(){
 			$('#nav-list > li').click(function() {
@@ -15,14 +15,14 @@ $(document).ready(function() {
 				generateFramework(selected_tab, generatePage);
 			});
 		};
-		
+
 		// Register the onclick events for the embedded experience inline nav
-		function register_experienceevents(){ 
+		function register_experienceevents(){
 			$('#experience-nav > li').click(
 				function() {
 					$(this).siblings().removeClass('active');
 					$(this).addClass('active');
-					
+
 					var selected = this.id;
 					if (current_experience == selected) {
 						return;
@@ -32,14 +32,14 @@ $(document).ready(function() {
 				}
 			)
 		};
-		
+
 		// Register the onclick events for the embedded university inline nav
-		function register_universityevents(){ 
+		function register_universityevents(){
 			$('#year-nav > li').click(
 				function() {
 					$(this).siblings().removeClass('active');
 					$(this).addClass('active');
-					
+
 					var selected_year = this.id;
 					if (current_year == selected_year) {
 						return;
@@ -49,7 +49,7 @@ $(document).ready(function() {
 				}
 			)
 		};
-		
+
 		// Register the onclick events on contact page
 		function register_contactevents(){
 			$('#email').click(
@@ -63,7 +63,7 @@ $(document).ready(function() {
 				}
 			)
 		};
-		
+
 		// Unbinds other events and registers the powerOn function to the button
 		function buttonOn(){
 			$('#power-button').unbind('click');
@@ -72,7 +72,7 @@ $(document).ready(function() {
 				 setTimeout(powerOn,500);
 			});
 		};
-		
+
 		// Unbinds other events and registers the powerOff function to the button
 		function buttonOff(){
 			$('#power-button').prop('disabled',false);
@@ -87,7 +87,7 @@ $(document).ready(function() {
 							}
 							, 100
 						);
-						
+
 						// do a little flash
 						setTimeout(
 							function(){
@@ -101,7 +101,7 @@ $(document).ready(function() {
 				}
 			);
 		};
-		
+
 		// Unbinds other events on the button
 		function buttonDisabled(){
 			$('#power-button').prop('disabled',false);
@@ -128,31 +128,31 @@ $(document).ready(function() {
 				}
 			);
 		};
-		
+
 	// }
-	
+
 	// Functions for generating Frameworks and Page information {
-	
+
 		// Generates the divs of each page and callbacks on the page generating function
 		function generateFramework(tab,callback){
 			document.getElementById("inner-terminal-content").innerHTML = framework[tab];
 			callback(tab);
 		}
-		
+
 		// Generates the main nav bar for the page, callback to register events
 		function generateNav(callback){
 			document.getElementById("terminal").innerHTML = framework["terminal"];
 			document.getElementById("terminal-content").innerHTML = framework["nav"];
 			callback(current_tab);
 		}
-		
+
 		// Generates the page using the typerfunction which simulates typing
 		function generatePage(tab){
 			if (tab == "education"){
 				typerfunction(defaultuniversity, 'university', 2, register_universityevents)();
 				typerfunction(alevels, 'alevel',10)();
 				typerfunction(gcses, 'gcses',10)();
-			} 
+			}
 			else if (tab == "about"){
 				typerfunction(about, 'about-info',5)();
 				typerfunction(biography, 'biography', 5)();
@@ -164,7 +164,7 @@ $(document).ready(function() {
 				typerfunction(defaultexperience, 'experience-content', 1, register_experienceevents)();
 			}
 			else if (tab == "projects"){
-				
+
 			}
 			else if (tab == "loading"){
 				fillLoadingBar(34,100)();
@@ -176,15 +176,15 @@ $(document).ready(function() {
 				typerfunction(splash_text, "splash-text",50)();
 			}
 		};
-		
-		// Loads the splash screen after a delay, then loads the initial page ("about") 
+
+		// Loads the splash screen after a delay, then loads the initial page ("about")
 		function loadSplashScreen(){
 				setTimeout(function(){
 					generateFramework("splash", generatePage)
 					},1500);
 				setTimeout(initialisePage, 4000);
 		};
-		
+
 		// Initialises the page on the main site, after loading
 		function initialisePage(){
 			current_tab = "about";
@@ -193,11 +193,11 @@ $(document).ready(function() {
 			// Enable button again
 			buttonOff();
 		};
-	
+
 	// }
-	
+
 	// Pretty misc functions {
-		
+
 		// Generates a typing function with relevant html & div information, and callback for event registering
 		function typerfunction(html, id, delay, callback){
 			var i = 0;
@@ -210,12 +210,12 @@ $(document).ready(function() {
 				}
 				text = html.slice(0, ++i);
 				var element = document.getElementById(id);
-				
+
 				if (!element){
 					// element was removed
 					return;
 				}
-				
+
 				element.innerHTML = text;
 
 				if (text === html) {
@@ -223,7 +223,7 @@ $(document).ready(function() {
 					if (callback) callback();
 					return;
 				}
-			
+
 				var char = text.slice(-1);
 				if( char === '<' ) isTag = true;
 				if( char === '>' ) isTag = false;
@@ -232,7 +232,7 @@ $(document).ready(function() {
 				setTimeout(type, delay);
 			};
 		};
-		
+
 		// Fills loading bars on the page with a parameter size and delay
 		function fillLoadingBar(size,delay){
 			var i = 0;
@@ -256,50 +256,50 @@ $(document).ready(function() {
 				setTimeout(loading, delay)
 			};
 		};
-	
+
 	// }
-	
+
 	// Page constructors / destructors {
-	
+
 		// Initiates the page loading process, changing bg and generating framework
 		function powerOn(){
-			
+
 			//Change background image
-			
-			
+			$('#terminal-container').css("background-image", "url('images/monitorborderon.png')");
+
 			//Disable button until loaded
 			buttonDisabled();
-			
+
 			//Load boot sequence
 			generateFramework("loading", generatePage);
 		};
-		
+
 		// Returns the page to the 'off' state, resetting HTML changes and changing bg
 		function powerOff(){
-			
-			//Change background image
-			
-			
+
 			//Generate empty terminal
 			$('#terminal').html(framework['empty']);
-			
+
+			//Change background image
+			$('#terminal-container').css("background-image", "url('images/monitorborder.png')");
+
 			//Change button to powerOn
 			buttonOn();
 		};
-		
+
 	// }
-		
+
 	// Actual execution
-	
+
 	buttonOn();
-	
+
 	// global variables for page information
 	var current_year = "total";
 	var current_tab = "about";
 	var current_experience = "warwicktech";
-	
+
 	// Framework, page and general HTML information
-	
+
 	var power_info = {
 		'shutdown' : "\
 			<div id=\"power-button-info\">\
@@ -345,8 +345,7 @@ $(document).ready(function() {
 				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs342/\">Machine Learning</a> - 84\%</li> \
 				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs346/\">Advanced Databases</a> - 66\%</li> \
 				<li>> <a target=\"\_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs313/\">Mobile Robotics</a> - 81\%</li> \
-				<li>> <a target=\"\_blank\" href=\"http://www2.warwick.ac.uk/services/aro/dar/quality/modules/ib382/\">Project Management</a> - 67\%</li> \
-				<li>> </li>",
+				<li>> <a target=\"\_blank\" href=\"http://www2.warwick.ac.uk/services/aro/dar/quality/modules/ib382/\">Project Management</a> - 67\%</li> ",
 		'year4': "TO BE CONFIRMED ...",
 		'total': " \
 				<li><pre>[========================>        ]</pre></li> \
@@ -359,11 +358,11 @@ $(document).ready(function() {
 				<li>2.1 - 5</li> \
 				<li>2.2 - 0</li>"
 	};
-	
+
 	var alevels = "<p>The Judd School<br><br>A-Levels <br>Maths (A) Chemistry (A*) <br>Physics (A) Economics (B)</p>";
-	
+
 	var gcses= "<p><br><br>GCSEs<br>7A* (Maths, 3 Sciences), 2A <br>(English), 1B (DT)</p>";
-	
+
 	var defaultuniversity = "\
 					EDUCATION \
 					<p> \
@@ -378,7 +377,7 @@ $(document).ready(function() {
 					</ul> \
 					<ul id=\"module-list\">"
 					+ module_results['total'] +"</ul>";
-	
+
 	var experiences = {
 		'warwicktech' : "\
 					<div id=\"warwicktech\" class=\"terminal-full-column\">\
@@ -404,12 +403,39 @@ $(document).ready(function() {
 							</ul>\
 						</p>\
 					</div>",
-		'internship' : "",
+		'internship' : "\
+		<div id=\"etech\" class=\"terminal-full-column\">\
+			<a target=\"_blank\" href=\"http://warwick.tech\">eTech Solutions</a>\
+			<p>\
+				Software Development Summer Intern (2016)\
+			</p>\
+			<p>\
+				eTech was a really dynamic and exciting environment for\
+				working which has really enthused me to working in the Software Development\
+				industry. The team structure was really dynamic, with regular standup and scrum\
+				meetings, and my time here offered me some amazing real-world experience working\
+				on deployed systems, allowing me to develop my skills further from University.\
+			</p>\
+			<p>\
+				During my time at eTech, I worked on a number of different projects, with the main\
+				focus on:\
+			</p>\
+			<ul>\
+				<li>> <a target=\"_blank\" href=\"https://github.com/HangfireIO/Hangfire\">Hangfire</a>, an open-source C# background job performer</li>\
+				<li>> <a target=\"_blank\" href=\"https://github.com/envman/vetus\">Vetus</a>, an inhouse Node.js GitHub wrapper</li>\
+			</ul>\
+			<p>\
+				Check them out!\
+				<ul>\
+					<li><a target=\"_blank\" href=\"https://www.linkedin.com/company/etech-solutions-ltd\">LinkedIn</a></li>\
+				</ul>\
+			</p>\
+		</div>",
 		'university' : "",
 		'misc' : ""
 	};
 
-	
+
 	var defaultexperience = "\
 					EXPERIENCE \
 					<ul id=\"experience-nav\" class=\"inline-nav\">\
@@ -418,10 +444,11 @@ $(document).ready(function() {
 						<li id=\"university\" class=\"success\">[UNIVERSITY]</li>\
 						<li id=\"misc\" class=\"success\">[MISC]</li>\
 					</ul>\
-					<div id=\"inner-experience-content\">" 
+					<div id=\"inner-experience-content\">"
 					+ experiences[current_experience] + "</div>";
-	
-	var contact = "					CONTACT\
+
+	var contact = "\
+						CONTACT\
 						<p>\
 							Noone likes getting their details taken by webcrawlers! <br>\
 							Just click the links below to reveal the information!\
@@ -438,9 +465,9 @@ $(document).ready(function() {
 						<p>\
 						Wubba, lubba, dub, dub!\
 						</p>";
-					
+
 	var about = "\
-					ABOUT ME\
+						ABOUT ME\
 						<p>\
 							James H. J. Mahoney\
 						</p>\
@@ -448,11 +475,11 @@ $(document).ready(function() {
 							<li>CURRENT STATUS</li>\
 							<li>> 4th year Computer Science student @ <a target=\"_blank\" href=\"https://www2.warwick.ac.uk/\">Warwick University</a></li>\
 							<li>> Technical lead for <a target=\"_blank\" href=\"http://warwick.tech\">WarwickTECH</a><li>\
-							<li>> Currently interning in Development @ <a target=\"_blank\" href=\"http://etech.net/\">eTech</a> </li>\
+							<li>> 2016 Intern in Development @ <a target=\"_blank\" href=\"http://etech.net/\">eTech</a> </li>\
 							<li><br></li>\
 							<li class=\"success\">> Looking for job opportunities in Software Engineering</li>\
 						</ul>";
-						
+
 	var biography = "\
 						BIOGRAPHY\
 						<p>\
@@ -467,7 +494,7 @@ $(document).ready(function() {
 	var terminal_info = "ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM\
 						<br>\
 						COPYRIGHT 2075-2077 ROBCO INDUSTRIES";
-						
+
 	var boot_text = "	<ul id=\"boot-text\">\
 							<li>LOADING KERNEL</li>\
 							<li>PROBING SYSTEM</li>\
@@ -475,21 +502,21 @@ $(document).ready(function() {
 							<li>LOADING CORE</li>\
 							<li>BOOTING</li>\
 						</ul>";
-						
+
 	var boot_progress = "<li>✓</li>\
 						<li>✓</li>\
 						<li>✓</li>\
 						<li>✓</li>\
 						<li>✓</li>";
-						
+
 	var splash_text = "Welcome USER!";
-	
+
 	//obscure contact details from lil webcrawlers
 	var emailstart = "j.h.j.mahoney";
 	var emaildomain = "@warwick.ac.uk";
 	var phonestart = "07561";
 	var phoneend = "809893";
-	
+
 	// The div information for generating each pages framework
 	var framework = {
 		'about' : "<div id=\"about-info\" class=\"terminal-full-column\"></div>\
@@ -525,15 +552,15 @@ $(document).ready(function() {
 						COPYRIGHT 2075-2077 ROBCO INDUSTRIES\
 					</div>\
 					<pre>"+
-"\n" + 
-"\n" + 
 "\n" +
 "\n" +
-"           ____        __    __________     __  ______  _____\n" + 
-"          / __ \\____  / /_  / ____/ __ \\   / / / / __ \\/ ___/\n" + 
-"         / /_/ / __ \\/ __ \\/ /   / / / /  / / / / / / /\\__ \\ \n" + 
-"        / _, _/ /_/ / /_/ / /___/ /_/ /  / /_/ / /_/ /___/ / \n" + 
-"       /_/ |_|\\____/_.___/\\____/\\____/   \\____/\\____//____/  \n" + 
+"\n" +
+"\n" +
+"           ____        __    __________     __  ______  _____\n" +
+"          / __ \\____  / /_  / ____/ __ \\   / / / / __ \\/ ___/\n" +
+"         / /_/ / __ \\/ __ \\/ /   / / / /  / / / / / / /\\__ \\ \n" +
+"        / _, _/ /_/ / /_/ / /___/ /_/ /  / /_/ / /_/ /___/ / \n" +
+"       /_/ |_|\\____/_.___/\\____/\\____/   \\____/\\____//____/  \n" +
 "\t   \n"
 					+"</pre>\
 					<div id =\"splash-text\" class = \"terminal-center-text\">\
