@@ -4,48 +4,32 @@ $(document).ready(function() {
 
 		// Register onclick events for the main navbar
 		function register_navevents(){
-			$('#nav-list > li').click(function() {
-				$('#nav-list > li').removeClass('active');
-				$(this).addClass('active');
-				selected_tab = this.id;
-				if (selected_tab == current_tab){
-					return;
-				}
-				current_tab = selected_tab;
-				generateFramework(selected_tab, generatePage);
+			$('#nav-list > li').click(
+				function() {
+					$('#nav-list > li').removeClass('active');
+					$(this).addClass('active');
+					selected_tab = this.id;
+					if (selected_tab == current_tab){
+						return;
+					}
+					current_tab = selected_tab;
+					generateFramework(selected_tab, generatePage);
 			});
 		};
 
-		// Register the onclick events for the embedded experience inline nav
-		function register_experienceevents(){
-			$('#experience-nav > li').click(
+		// NEW: Register onclick events for any embedded nav bar
+		function register_embeddedevents(content){
+			$('#embedded-nav > li').click(
 				function() {
 					$(this).siblings().removeClass('active');
 					$(this).addClass('active');
 
 					var selected = this.id;
-					if (current_experience == selected) {
+					if (current_embedded_tab == selected) {
 						return;
 					}
-					current_experience = selected;
-					$('#inner-experience-content').html(experiences[selected]);
-				}
-			)
-		};
-
-		// Register the onclick events for the embedded university inline nav
-		function register_universityevents(){
-			$('#year-nav > li').click(
-				function() {
-					$(this).siblings().removeClass('active');
-					$(this).addClass('active');
-
-					var selected_year = this.id;
-					if (current_year == selected_year) {
-						return;
-					}
-					current_year = selected_year;
-					$('#module-list').html(module_results[selected_year]);
+					current_embedded_tab = selected;
+					$('#embedded-inner-content').html(content[current_embedded_tab]);
 				}
 			)
 		};
@@ -149,7 +133,10 @@ $(document).ready(function() {
 		// Generates the page using the typerfunction which simulates typing
 		function generatePage(tab){
 			if (tab == "education"){
-				typerfunction(defaultuniversity, 'university', 2, register_universityevents)();
+				current_embedded_tab = "total";
+				typerfunction(defaultuniversity, 'university', 2, function() {
+					register_embeddedevents(module_results)
+				})();
 				typerfunction(alevels, 'alevel',10)();
 				typerfunction(gcses, 'gcses',10)();
 			}
@@ -161,10 +148,16 @@ $(document).ready(function() {
 				typerfunction(contact, 'contact-info',5,register_contactevents)();
 			}
 			else if (tab == "experience"){
-				typerfunction(defaultexperience, 'experience-content', 1, register_experienceevents)();
+				current_embedded_tab = "warwicktech";
+				typerfunction(defaultexperience, 'experience-content', 1, function(){
+					register_embeddedevents(experiences)
+				})();
 			}
 			else if (tab == "projects"){
-
+				current_embedded_tab = "year4";
+				typerfunction(defaultproject, 'project-content', 1, function(){
+					register_embeddedevents(projects)
+				})();
 			}
 			else if (tab == "loading"){
 				fillLoadingBar(34,100)();
@@ -274,7 +267,7 @@ $(document).ready(function() {
 			generateFramework("loading", generatePage);
 		};
 
-		// Returns the page to the 'off' state, resetting HTML changes and changing bg
+		// Returns the page to the 'off' state, resetting HTML changes and changing background
 		function powerOff(){
 
 			//Generate empty terminal
@@ -294,9 +287,8 @@ $(document).ready(function() {
 	buttonOn();
 
 	// global variables for page information
-	var current_year = "total";
 	var current_tab = "about";
-	var current_experience = "warwicktech";
+	var current_embedded_tab = "";
 
 	// Framework, page and general HTML information
 
@@ -368,15 +360,15 @@ $(document).ready(function() {
 					<p> \
 						University of Warwick - Computer Science MEng \
 					</p> \
-					<ul id=\"year-nav\" class=\"inline-nav\"> \
+					<ul id=\"embedded-nav\" class=\"inline-nav\"> \
 						<li id=\"year1\" class=\"success\">[YEAR 1]</li> \
 						<li id=\"year2\" class=\"success\">[YEAR 2]</li> \
 						<li id=\"year3\" class=\"success\">[YEAR 3]</li> \
 						<li id=\"year4\" class=\"awaiting\">[YEAR 4]</li> \
 						<li id=\"total\" class=\"awaiting active\">[TOTAL]</li> \
 					</ul> \
-					<ul id=\"module-list\">"
-					+ module_results['total'] +"</ul>";
+						<ul id=\"embedded-inner-content\">"
+						+ module_results['total'] +"</ul>";
 
 	var experiences = {
 		'warwicktech' : "\
@@ -431,21 +423,36 @@ $(document).ready(function() {
 				</ul>\
 			</p>\
 		</div>",
-		'university' : "",
-		'misc' : ""
+		'misc' : " INSERT CONTENT HERE "
 	};
 
+	var projects = {
+		'year2' : "",
+		'year3' :"<div id=\"3rdyearproject\" class=\"terminal-full-column\">\r\n    <a target=\"_blank\" href=\"http:\/\/www2.warwick.ac.uk\/fac\/sci\/dcs\/teaching\/modules\/cs310\/\">Third year individual project - 1st classification<\/a>\r\n    <p>\r\n        Investigating and implementing a large scale facial recognition system on the <a target=\"_blank\" href=\"http:\/\/www2.warwick.ac.uk\/fac\/sci\/csc\/\">Tinis<\/a> cluster\r\n    <\/p>\r\n    <p>\r\n        This project entailed significant research into current facial recognition techniques and preprocessing steps with the goal of designing and developing a facial recognition system to be run on the new Warwick cluster, with key importance placed on improving performance for large training and testing sets of faces, both in recognition rate and runtime.\r\n    <\/p>\r\n    <p> The final system featured a multi-classifier Linear Discriminant Analysis approach, which split the training set into maximally seperated LDA clusters to improve each recognisers performance. The system also featured batch delivery and a dynamic load balancer for realtime results even with extremely large testing sets.\r\n    <\/p>\r\n    <ul>\r\n        <li>> Supervised by head of department, <a target=\"_blank\" href=\"http:\/\/www2.warwick.ac.uk\/fac\/sci\/dcs\/people\/stephen_jarvis\/\">Prof Stephen Jarvis<\/a><\/li>\r\n        <li>> Final system in C++ using <a target=\"_blank\" href=\"http:\/\/openmp.org\/wp\/\">OpenMP<\/a>, <a target=\"_blank\" href=\"https:\/\/www.open-mpi.org\/\">OpenMPI<\/a> and <a target=\"_blank\" href=\"http:\/\/opencv.org\/\">OpenCV<\/a><\/li>\r\n    <\/ul>\r\n<\/div>",
+		'year4' : "",
+		'warwickhack' : ""
+	};
 
 	var defaultexperience = "\
 					EXPERIENCE \
-					<ul id=\"experience-nav\" class=\"inline-nav\">\
-						<li id=\"warwicktech\" class=\"active success\">[WARWICKTECH]<li>\
+					<ul id=\"embedded-nav\" class=\"inline-nav\">\
+						<li id=\"warwicktech\" class=\"active success\">[WARWICKTECH]</li>\
 						<li id=\"internship\" class=\"success\">[INTERNSHIPS]</li>\
-						<li id=\"university\" class=\"success\">[UNIVERSITY]</li>\
 						<li id=\"misc\" class=\"success\">[MISC]</li>\
 					</ul>\
-					<div id=\"inner-experience-content\">"
-					+ experiences[current_experience] + "</div>";
+					<div id=\"embedded-inner-content\">"
+					+ experiences['warwicktech'] + "</div>";
+
+  var defaultproject = "\
+				PROJECTS \
+				<ul id=\"embedded-nav\" class=\"inline-nav\">\
+					<li id=\"year2\" class=\"success\">[YEAR 2]</li>\
+					<li id=\"year3\" class=\"success\">[YEAR 3]</li>\
+					<li id=\"year4\" class=\"active success\">[YEAR 4]</li>\
+					<li id=\"warwickhack\" class=\"success\">[WARWICKHACK]</li>\
+				</ul>\
+				<div id=\"embedded-inner-content\">"
+				+ projects['year4'] + "</div>";
 
 	var contact = "\
 						CONTACT\
@@ -527,7 +534,7 @@ $(document).ready(function() {
 		<div id=\"gcses\" class=\"terminal-half-column\"> \
 		",
 		'experience' : "<div id=\"experience-content\" class=\"terminal-full-column\"></div>",
-		'projects' : "",
+		'projects' : "<div id=\"project-content\" class=\"terminal-full-column\"></div>",
 		'contact' : "\
 					<div id=\"contact-info\" class=\"terminal-full-column\"></div>",
 		'loading' : "\
