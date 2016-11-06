@@ -404,9 +404,9 @@ $(document).ready(function() {
 			<p>\
 				eTech was a really dynamic and exciting environment for\
 				working which has really enthused me to working in the Software Development\
-				industry. The team structure was really dynamic, with regular standup and scrum\
-				meetings, and my time here offered me some amazing real-world experience working\
-				on deployed systems, allowing me to develop my skills further from University.\
+				industry. The team structure was agile, with regular standup and scrum\
+				meetings, offering me some amazing real-world experience working\
+				on deployed systems and allowing me to develop my skills further from University.\
 			</p>\
 			<p>\
 				During my time at eTech, I worked on a number of different projects, with the main\
@@ -414,7 +414,7 @@ $(document).ready(function() {
 			</p>\
 			<ul>\
 				<li>> <a target=\"_blank\" href=\"https://github.com/HangfireIO/Hangfire\">Hangfire</a>, an open-source C# background job performer</li>\
-				<li>> <a target=\"_blank\" href=\"https://github.com/envman/vetus\">Vetus</a>, an inhouse Node.js GitHub wrapper</li>\
+				<li>> <a target=\"_blank\" href=\"https://github.com/envman/vetus\">Vetus</a>, an inhouse Node.js GitHub wrapper for JSON management</li>\
 			</ul>\
 			<p>\
 				Check them out!\
@@ -423,14 +423,78 @@ $(document).ready(function() {
 				</ul>\
 			</p>\
 		</div>",
-		'misc' : " INSERT CONTENT HERE "
+		'misc' : " TO BE FINISHED! I'M INTERESTING I SWEAR!"
 	};
 
 	var projects = {
-		'year2' : "",
-		'year3' :"<div id=\"3rdyearproject\" class=\"terminal-full-column\">\r\n    <a target=\"_blank\" href=\"http:\/\/www2.warwick.ac.uk\/fac\/sci\/dcs\/teaching\/modules\/cs310\/\">Third year individual project - 1st classification<\/a>\r\n    <p>\r\n        Investigating and implementing a large scale facial recognition system on the <a target=\"_blank\" href=\"http:\/\/www2.warwick.ac.uk\/fac\/sci\/csc\/\">Tinis<\/a> cluster\r\n    <\/p>\r\n    <p>\r\n        This project entailed significant research into current facial recognition techniques and preprocessing steps with the goal of designing and developing a facial recognition system to be run on the new Warwick cluster, with key importance placed on improving performance for large training and testing sets of faces, both in recognition rate and runtime.\r\n    <\/p>\r\n    <p> The final system featured a multi-classifier Linear Discriminant Analysis approach, which split the training set into maximally seperated LDA clusters to improve each recognisers performance. The system also featured batch delivery and a dynamic load balancer for realtime results even with extremely large testing sets.\r\n    <\/p>\r\n    <ul>\r\n        <li>> Supervised by head of department, <a target=\"_blank\" href=\"http:\/\/www2.warwick.ac.uk\/fac\/sci\/dcs\/people\/stephen_jarvis\/\">Prof Stephen Jarvis<\/a><\/li>\r\n        <li>> Final system in C++ using <a target=\"_blank\" href=\"http:\/\/openmp.org\/wp\/\">OpenMP<\/a>, <a target=\"_blank\" href=\"https:\/\/www.open-mpi.org\/\">OpenMPI<\/a> and <a target=\"_blank\" href=\"http:\/\/opencv.org\/\">OpenCV<\/a><\/li>\r\n    <\/ul>\r\n<\/div>",
-		'year4' : "",
-		'warwickhack' : ""
+		'year2' : "<div id=\"2ndyearproject\" class=\"terminal-full-column\">\
+		                <a target=\"_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs261/\">Deutsche Bank group project - 1st classification</a>\
+		                <p>\
+		                  	This project entailed working in a team of 4 to create a full software stack to identify and collate suspicious trading activity within\
+		                  	a virtual stream of trades to presenting the information to analysts, allowing more detailed investigation.\
+		                </p>\
+						<p>\
+							During this project, we adopted a SCRUM methodology, in which each team member was responsible for part of the software stack. \
+							My role was to implement the backend of the stack, written in Java, which would analyse the stream for suspicious trades using a sliding window protocol. \
+						</p>\
+						<p>\
+							This project was a valuable first group experience and taught me the importance of maintaining good team relations and consistent communication throughout a project, especially when working on seperate levels of the development stack.\
+						</p>\
+						<p>\
+							Read more about this module here:\
+							<ul>\
+								<li><a target=\"_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs261/\">CS261</a></li>\
+							</ul>\
+						</p>\
+					</div>",
+		'year3' : "<div id=\"3rdyearproject\" class=\"terminal-full-column\">\r\n    <a target=\"_blank\" href=\"http:\/\/www2.warwick.ac.uk\/fac\/sci\/dcs\/teaching\/modules\/cs310\/\">Third year individual project - 1st classification<\/a>\r\n    <p>\r\n        Investigating and implementing a large scale facial recognition system on the <a target=\"_blank\" href=\"http:\/\/www2.warwick.ac.uk\/fac\/sci\/csc\/\">Tinis<\/a> cluster\r\n    <\/p>\r\n    <p>\r\n        This project entailed significant research into current facial recognition techniques and preprocessing steps with the goal of designing and developing a facial recognition system to be run on the new Warwick cluster, with key importance placed on improving performance for large training and testing sets of faces, both in recognition rate and runtime.\r\n    <\/p>\r\n    <p> The final system featured a multi-classifier Linear Discriminant Analysis approach, which split the training set into maximally seperated LDA clusters to improve each recognisers performance. The system also featured batch delivery and a dynamic load balancer for realtime results even with extremely large testing sets.\r\n    <\/p>\r\n    <ul>\r\n        <li>> Supervised by head of department, <a target=\"_blank\" href=\"http:\/\/www2.warwick.ac.uk\/fac\/sci\/dcs\/people\/stephen_jarvis\/\">Prof Stephen Jarvis<\/a><\/li>\r\n        <li>> Final system in C++ using <a target=\"_blank\" href=\"http:\/\/openmp.org\/wp\/\">OpenMP<\/a>, <a target=\"_blank\" href=\"https:\/\/www.open-mpi.org\/\">OpenMPI<\/a> and <a target=\"_blank\" href=\"http:\/\/opencv.org\/\">OpenCV<\/a><\/li>\r\n    <\/ul>\r\n<\/div>",
+		'year4' : "<div id=\"4thyearproject\" class=\"terminal-full-column\">\
+					<a target=\"_blank\" href=\"https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs261/\">Fourth year group project - IN PROGRESS</a>\
+	                <p>\
+						<a target=\"_blank\" href=\"http://hackath.org\">Hackath.org</a> - Modular web-based <a target=\"_blank\" href=\"https://en.wikipedia.org/wiki/Hackathon\">Hackathon</a> organiser tool\
+					</p>\
+					<p>\
+						This project aims to provide a way for inexperienced Hackathon organisers to be able to instantly deploy a completely customisable web framework for hosting hackathons.\
+						The goal is to create a user friendly experience for both Hackathon organisers and attendees, in which additional 'modules' of features can be both created &amp; integrated seamlessly.\
+					</p>\
+					<p>\
+						Some of the cool intended features include:\
+					</p>\
+						<ul>\
+							<li> > Open source and developed using the <a target=\"_blank\" href=\"http://mean.io\">MEAN</a> stack</li>\
+							<li> > Integrated admin JS 'hackage' manager</li>\
+							<li> > Skill-based team builder &amp; communications</li>\
+							<li> > Sandboxed coding environments &amp; challenges</li>\
+						</ul>\
+					<p>\
+						Check it out! (Development has only just begun!)\
+					<ul>\
+						<li><a target=\"_blank\" href=\"https://github.com/hackathorg/hackathorg\">GitHub</a> &amp; <a target=\"_blank\" href=\"http://hackath.org\">Hackath.org</a> </li>\
+					</ul>\
+					</p>\
+					</div>",
+		'warwickhack' : "<div id=\"warwickhack\" class=\"terminal-full-column\">\
+							<a target=\"_blank\" href=\"http://warwick.tech/hack\">WarwickHACK - WarwickTECH's Termly Hackathon</a>\
+							<p>\
+				            	As the Technical Officer of WarwickTECH, it was my responsibility to ensure the event was fully realised and executed effectively. \
+				            	Alongside the exec team, I organised the variety of sponsors, workshops and food orders for the event, with my main task being to create and maintain \
+				            	a strong online presence, collating the variety of resources for all those attending the hackathon, both competitors and sponsors. \
+				            </p>\
+			            	<p>\
+			            		My main responsibilities for organising these events included: \
+			            	</p>\
+			            	<ul>\
+				            	<li> > Creating both Hackathon pages &amp; coding resource hubs</li>\
+				            	<li> > Mentoring and helping at coding workshops</li>\
+				            	<li> > Event organisation, including sponsors and food</li>\
+			            	</ul>\
+			            	<p>\
+			            		Our Hackathons have been some of the most successful and memorable in the UK, with our team named as one of the best hosts by MLH in their EU conference.\
+			            		Check it out! \
+			            	</p>\
+			            	<ul>\
+				            	<li><a target=\"_blank\" href=\"http://warwick.tech/hack\">WarwickHACK</a></li>\
+						</div>"
 	};
 
 	var defaultexperience = "\
