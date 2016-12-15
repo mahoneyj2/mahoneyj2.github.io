@@ -559,7 +559,7 @@ $(document).ready(function() {
 						</p>\
 						<ul>\
 							<li>Here\'s my CV, so hire me, maybe?</li>\
-							<li>> <a target=\"_blank\" href=\"http://warwick.tech\">Resume PDF</a><li>\
+							<li>> <a target=\"_blank\" href=\"pdf/jamesmahoneycv_latest_needs_reformat.pdf\">Resume PDF</a><li>\
 							<li>> <a target=\"_blank\" href=\"https://github.com/mahoneyj2\">GitHub</a> </li>\
 						</ul>";
 	var terminal_info = "ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM\
