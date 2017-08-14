@@ -544,11 +544,11 @@ $(document).ready(function() {
 						</p>\
 						<ul>\
 							<li>CURRENT STATUS</li>\
-							<li>> 4th year Computer Science student @ <a target=\"_blank\" href=\"https://www2.warwick.ac.uk/\">Warwick University</a></li>\
-							<li>> Technical lead for <a target=\"_blank\" href=\"http://warwick.tech\">WarwickTECH</a><li>\
+							<li>> Computer Science Masters Graduate @ <a target=\"_blank\" href=\"https://www2.warwick.ac.uk/\">Warwick University</a></li>\
+							<li>> Previous Technical lead for <a target=\"_blank\" href=\"http://warwick.tech\">WarwickTECH</a><li>\
 							<li>> 2016 Intern in Development @ <a target=\"_blank\" href=\"http://etech.net/\">eTech</a> </li>\
 							<li><br></li>\
-							<li class=\"success\">> Looking for job opportunities in Software Engineering</li>\
+							<li class=\"success\">> Not looking for opportunities right now! </li>\
 						</ul>";
 
 	var biography = "\
