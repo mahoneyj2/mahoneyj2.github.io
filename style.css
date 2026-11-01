@@ -27,6 +27,7 @@ body {
 	min-height: 100vh;
 	min-height: 100dvh;
 	display: grid;
+	grid-template-columns: minmax(0, 1fr);
 	place-items: center;
 	padding: 2vh 12px;
 	background: radial-gradient(ellipse at 50% 30%, #090b09 0%, #020302 70%);
@@ -39,6 +40,7 @@ body {
 
 .monitor {
 	width: min(100%, 1240px);
+	min-width: 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -371,6 +373,8 @@ a { color: var(--fg); }
 	min-height: 0;
 	width: 100%;
 	max-width: 34rem;
+	/* Size the ASCII logo from the panel, without letting it widen the monitor. */
+	container-type: inline-size;
 	align-self: center;
 	padding-top: clamp(20px, 6vh, 64px);
 	text-align: center;
@@ -379,7 +383,8 @@ a { color: var(--fg); }
 .boot .bar { margin-top: var(--row); text-align: left; }
 .boot .logo {
 	white-space: pre;
-	font-size: min(1em, 2.6vw);
+	/* The 54-column Fixedsys logo needs just under 30 times its font size. */
+	font-size: min(1em, calc(100cqi / 30));
 	line-height: 1.15;
 	width: max-content;
 	max-width: 100%;
