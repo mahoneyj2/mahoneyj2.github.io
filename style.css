@@ -383,7 +383,9 @@ a { color: var(--fg); }
 .boot .bar { margin-top: var(--row); text-align: left; }
 .boot .logo {
 	white-space: pre;
-	/* The 54-column Fixedsys logo needs just under 30 times its font size. */
+	/* Use the bundled font: Android's default monospace can make this wider. */
+	font-family: inherit;
+	/* The 54-column logo occupies 27em; leave room at either side. */
 	font-size: min(1em, calc(100cqi / 30));
 	line-height: 1.15;
 	width: max-content;
