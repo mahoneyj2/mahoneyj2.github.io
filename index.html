@@ -1,176 +1,170 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Terminal</title>
-	<meta name="description" content="Fallout Terminal">
-	<meta name="author" content="James Mahoney">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>James Mahoney</title>
+	<meta name="description" content="James Mahoney: software engineer and Vice President at Barclays Corporate & Investment Bank, London.">
+	<meta name="author" content="James Mahoney">
+	<meta property="og:title" content="James Mahoney">
+	<meta property="og:description" content="Software engineer at Barclays Corporate & Investment Bank, London.">
+	<meta property="og:type" content="website">
+	<meta name="theme-color" content="#0c0e0b">
 
-	<!-- CSS -->
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/terminal.css">
-
-	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="images/favicon.ico">
+	<!-- Set before first paint so the screen starts dark instead of flashing content -->
+	<script>document.documentElement.classList.add('js');</script>
+	<link rel="stylesheet" href="style.css?v=20261031.1">
+	<link rel="icon" href="images/favicon.ico">
 </head>
 
 <body>
-	<div id="terminal-container">
-		<!--<div id="flash"></div>-->
-		<div id="terminal">
-			<!-- Main screen -->
-			<div id="terminal-content">
-<!-- 				<div id="terminal-nav">
-					<ul id="nav-list">
-						<li id="about" class="">[ABOUT ME]</li>
-						<li id="education" class="">[EDUCATION]</li>
-						<li id="experience" class="">[EXPERIENCE]</li>
-						<li id="projects"class="">[PROJECTS]</li>
-						<li id="contact" class="">[CONTACT]</li>
-					</ul>
-				</div> -->
-				<div id="inner-terminal-content">
-<!-- 					<div id="experience-content" class="terminal-full-column">
-						EXPERIENCE
-						<ul id="experience-nav" class="inline-nav">
-							<li id="warwicktech" class="success">[WARWICKTECH]<li>
-							<li id="internship" class="success">[INTERNSHIPS]</li>
-							<li id="misc" class="active success">[MISC]</li>
-						</ul>
-						<div id="embedded-inner-content">
-						<div id="warwickhack" class="terminal-full-column">
-							<a target="_blank" href="http://warwick.tech/hack">WarwickHACK - WarwickTECH's Termly Hackathon</a>
-							<p>
-				            	As the Technical Officer of WarwickTECH, it was my responsibility to ensure the event was fully realised and executed effectively. 
-				            	Alongside the exec team, I organised the variety of sponsors, workshops and food orders for the event, with my main task being to create and maintain 
-				            	a strong online presence, collating the variety of resources for all those attending the hackathon, both competitors and sponsors. 
-				            </p>
-			            	<p>
-			            		My main responsibilities for organising these events included: 
-			            	</p>
-			            	<ul>
-				            	<li> > Creating both Hackathon pages &amp; coding resource hubs</li>
-				            	<li> > Mentoring and helping at coding workshops</li>
-				            	<li> > Event organisation, including sponsors and food</li>
-			            	</ul>
-			            	<p>
-			            		Our Hackathons have been some of the most successful and memorable in the UK, with our team named as one of the best hosts by MLH in their EU conference.
-			            		Check us out: 
-			            	</p>
-			            	<ul>
-				            	<li><a target="_blank" href="http://warwick.tech/hack">WarwickHACK</a></li>
-						</div>
-          			  </div>
-					</div> -->
+	<div class="monitor" id="monitor">
+		<div class="bezel">
+			<div class="screen off" id="screen">
+				<div class="phosphor" aria-hidden="true"></div>
+				<div class="glass" aria-hidden="true"></div>
+				<div class="ignition" aria-hidden="true"></div>
+				<div class="crt">
+					<header class="sys">
+						<p>ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL</p>
+						<h1 class="personnel">PERSONNEL FILE: JAMES MAHONEY</h1>
+					</header>
+
+					<!-- Boot sequence, filled in by terminal.js -->
+					<div class="boot" id="boot" hidden></div>
+
+					<div class="term" id="term">
+						<nav class="menu" id="menu" aria-label="Sections">
+							<a href="#about">[ABOUT ME]</a>
+							<a href="#experience">[EXPERIENCE]</a>
+							<a href="#projects">[PROJECTS]</a>
+							<a href="#education">[EDUCATION]</a>
+							<a href="#contact">[CONTACT]</a>
+						</nav>
+
+						<main class="content" id="content">
+							<section id="about" class="page">
+								<h2>ABOUT ME</h2>
+								<p class="lead">Vice President &middot; Market Risk</p>
+								<p class="meta"><a href="https://www.cib.barclays/">Barclays Corporate &amp; Investment Bank</a> &middot; London</p>
+								<dl class="facts">
+									<div><dt>Degree</dt><dd>MEng Computer Science &middot; First Class Honours<br><a href="https://warwick.ac.uk/study/undergraduate/courses/meng-computer-science/">University of Warwick</a></dd></div>
+									<div><dt>Qualification</dt><dd><a href="https://www.cqf.com/">Certificate in Quantitative Finance (CQF)</a></dd></div>
+								</dl>
+								<h2>BIOGRAPHY</h2>
+								<p>I&rsquo;m a software engineer and team lead at Barclays in London. I build market risk systems and enjoy working through difficult engineering problems.</p>
+								<p class="availability meta">Not currently looking for new opportunities.</p>
+							</section>
+
+							<section id="experience" class="page">
+								<h2>BARCLAYS CORPORATE &amp; INVESTMENT BANK</h2>
+								<p class="meta">London &middot; 2017 - present</p>
+								<article class="entry">
+									<header class="entry-heading"><p class="meta">Jul 2022 - present</p><h3>Vice President</h3></header>
+									<p>Leading development of the market risk calculation framework across FRTB SA and IMA.</p>
+								</article>
+								<article class="entry">
+									<header class="entry-heading"><p class="meta">Aug 2019 - Jul 2022</p><h3>Associate Vice President</h3></header>
+									<p>Senior developer and team lead on the market risk calculation framework.</p>
+								</article>
+								<article class="entry">
+									<header class="entry-heading"><p class="meta">Sep 2017 - Aug 2019</p><h3>Analyst</h3></header>
+									<p>Front Office developer supporting a .NET Excel application integrated with the QA library.</p>
+								</article>
+								<aside class="stack" aria-label="Technology across Barclays roles">
+									<p class="stack-label">TECH STACK &middot; ALL BARCLAYS ROLES</p>
+									<p>.NET (F#, C#) &middot; Angular &middot; Rust &middot; MongoDB &middot; PostgreSQL</p>
+								</aside>
+								<h2>EARLIER</h2>
+								<article class="entry">
+									<header class="entry-heading"><p class="meta">Summer 2016</p><h3>eTech Solutions</h3></header>
+									<p>Software development intern working with the open-source C# background-job library <a href="https://github.com/HangfireIO/Hangfire">Hangfire</a>.</p>
+								</article>
+								<article class="entry">
+									<header class="entry-heading"><p class="meta">2014 - 2016</p><h3>WarwickTECH</h3></header>
+									<p>Technical lead for WarwickTECH, building its website and helping organise WarwickHACK.</p>
+								</article>
+							</section>
+
+							<section id="projects" class="page">
+								<h2>PROJECTS</h2>
+								<article class="entry">
+									<h3>BARCLAYS <span class="meta">(WIP)</span></h3>
+									<p>Market risk calculation frameworks and FRTB SA / IMA. Project write-ups to follow.</p>
+								</article>
+								<article class="entry">
+									<h3>PERSONAL PROJECTS <span class="meta">(WIP)</span></h3>
+									<p>Side projects and experiments. Write-ups to follow.</p>
+								</article>
+								<h2>UNIVERSITY PROJECTS</h2>
+								<ul class="project-list">
+									<li><span class="project-name">Facial recognition</span><span>Distributed LDA face recognition on Warwick&rsquo;s HPC cluster, in C++.</span></li>
+									<li><span class="project-name">Hackath.org</span><span>A modular, self-hosted hackathon platform. MEng group project.</span></li>
+									<li><span class="project-name">Trade surveillance</span><span>A Java backend detecting suspicious activity in a stream of trades.</span></li>
+								</ul>
+								<p class="more-link"><a href="https://github.com/mahoneyj2">More code on GitHub</a></p>
+							</section>
+
+							<section id="education" class="page">
+								<h2>PROFESSIONAL QUALIFICATION</h2>
+								<article class="entry">
+									<p class="meta">2020 &ndash; 2021</p>
+									<h3><a href="https://www.cqf.com/">Certificate in Quantitative Finance (CQF)</a></h3>
+									<p>Financial Mathematics &middot; Completed during my time at Barclays.</p>
+								</article>
+								<h2>UNIVERSITY</h2>
+								<article class="entry">
+									<header class="entry-heading"><p class="meta">2013 - 2017</p><h3><a href="https://warwick.ac.uk/study/undergraduate/courses/meng-computer-science/">University of Warwick</a></h3></header>
+									<p>MEng Computer Science &middot; <span class="ok">First Class Honours</span></p>
+								</article>
+								<h2>SCHOOLING</h2>
+								<article class="entry">
+									<header class="entry-heading"><p class="meta">2006 - 2013</p><h3><a href="https://www.judd.online/">The Judd School</a></h3></header>
+									<dl class="facts">
+										<div><dt>A-levels</dt><dd>A*AAB<br><span class="meta">Chemistry, Maths, Physics, Economics</span></dd></div>
+										<div><dt>GCSEs</dt><dd>7 A*, 2 A, 1 B</dd></div>
+									</dl>
+								</article>
+							</section>
+
+							<section id="contact" class="page">
+								<h2>CONTACT</h2>
+								<p>Connect on LinkedIn or explore my code and projects on GitHub.</p>
+								<dl class="facts">
+									<div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/jamie-mahoney-608831134/">View profile</a></dd></div>
+									<div><dt>GitHub</dt><dd><a href="https://github.com/mahoneyj2">github.com/mahoneyj2</a></dd></div>
+									<div><dt>Location</dt><dd>London, UK</dd></div>
+								</dl>
+								<p class="availability meta">Not currently looking for new opportunities.</p>
+							</section>
+						</main>
+					</div>
+
+					<p class="power-msg" id="power-msg" aria-live="polite"></p>
+				</div>
+				<div class="scrollbar" id="scrollbar" role="scrollbar" aria-label="Scroll file" aria-controls="content" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" tabindex="0" hidden>
+					<div class="scroll-thumb" id="scroll-thumb"></div>
 				</div>
 			</div>
 		</div>
+
+		<div class="base">
+			<span class="screw" aria-hidden="true"></span>
+			<span class="grille" aria-hidden="true"></span>
+			<span class="screw" aria-hidden="true"></span>
+			<button class="sound-toggle" id="sound-toggle" type="button" aria-label="Sound effects" aria-pressed="true" hidden>SOUND ON</button>
+			<label class="power-label" for="power">POWER</label>
+			<button class="power" id="power" type="button" aria-pressed="false"></button>
+		</div>
 	</div>
-	<div id="power-button"></div>
-					<!--
-			            	<div id="university" class="terminal-full-column">
-				                <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs261/">Deutsche Bank group project - 1st classification</a>
-				                <p>
-				                  	This project entailed working in a team of 4 to create software to identify and collate suspicious trading activity within a virtual stream of trades, as well as creating
-				                	a full development stack for presenting the information to analysts, allowing more detailed investigation.
-				                </p>
-								<p> 
-									During this project, we adopted a SCRUM methodology, in which each team member was responsible for part of the software stack. 
-									My role was to implement the backend of the stack, written in Java, which would analyse the stream for suspicious trades using a sliding window protocol. 
-								</p>
-								<p>
-									This project was a valuable first group experience and taught me the importance of maintaining good team relations and consistent communication throughout a project, especially when working on seperate levels of the development stack.
-								</p>
-								<p>
-									Read more about this module here: 
-									<ul>
-										<li><a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs261/">CS261</a></li>
-									</ul>
-								</p>
-							</div>
 
-					<div id=\"warwicktech\" class=\"terminal-full-column\">\
-						<a target=\"_blank\" href=\"http://warwick.tech\">WarwickTECH society</a>\
-						<p>\
-							Lead Technical (2014-2016)\
-						</p>\
-						<p> WarwickTECH is a society at Warwick University in which I \
-							have been a member of the lead team for since its conception in 2014. We represent\
-							the combination of both technical skills and entrepreneurship and host a \
-							variety of events aimed at both areas.\
-						</p>\
-						Responsibilities included (but not limited to)\
-						<ul>\
-							<li>> Creating and maintaining a variety of web resources</li>\
-							<!--<li>> Creating WarwickHACK landing pages and resource hubs</li>\
-							<li>> Organising and running our multiple Hackathon events</li>\
-							<li>> Mentoring at Coding workshops<li>\
-						</ul>\
-						<p>\
-							Come check us out!\
-							<ul>\
-								<li><a target=\"_blank\" href=\"https://www.facebook.com/warwicktech\">Facebook</a></li>\
-								<li><a target=\"_blank\" href=\"https://www.linkedin.com/company/warwicktech\">LinkedIn</a></li>\
-							</ul>\
-						</p>\
-					</div>-->
-				<!--<div id="warwicktech" class="terminal-full-column">
-
-						<a href="http://warwick.tech">Deutsche Bank project</a>
-
-						<p>
-							As part of a team in 2nd year, we implemented a system for realtime detection of malicious trading
-							from a stream of trades and emails. We worked using an agile framework, undertaking regular SCRUM
-						</p>
-					</div>-->
-
-				<!--<div id="biography" class="terminal-full-column">
-						<a href="http://warwick.tech">eTech solutions</a>
-						<p>
-							Summer Intern (2016)
-						</p>
-					</div>
-					<div id="biography" class="terminal-full-column">
-						<a href="http://sayersb.co.uk">Sayers Butterworth</a>
-						<p>
-							Summer Intern (2011,2012)
-						</p>
-						<p>
-							Yo yo yo its ya boi Jamie Mahoney
-						</p>
-					</div>-->
-
-					<!-- 							
-							<div id="4thyearproject" class="terminal-full-column">
-				                <a target="_blank" href="https://www2.warwick.ac.uk/fac/sci/dcs/teaching/modules/cs261/">Fourth year group project - IN PROGRESS</a>
-				                <p>
-									Hackath.org - Modular web-based <a target="_blank" href="https://en.wikipedia.org/wiki/Hackathon">Hackathon</a> organiser tool
-								</p>
-								<p>
-									This project aims to provide a way for inexperienced Hackathon organisers to be able to instantly deploy a completely customisable web framework for hosting hackathons.
-									The goal is to create a user friendly experience for both Hackathon organisers and attendees, in which additional 'modules' of features can be  created &amp; integrated seamlessly.
-								</p>
-								<p>
-									Some of the cool intended features include:
-								</p>
-									<ul>
-										<li> > Open source and developed using the <a target="_blank" href="http://mean.io">MEAN</a> stack</li>
-										<li> > Integrated admin JS 'hackage' manager</li>
-										<li> > Skill-based team builder &amp; communications</li>
-										<li> > Sandboxed coding environments &amp; challenges</li>
-									</ul>
-								<p>
-									Check it out! (Development has only just begun!)
-								<ul>
-									<li><a target="_blank" href="https://github.com/hackathorg/hackathorg">GitHub</a></li>
-									<li><a target="_blank" href="http://hackath.org">Hackath.org</a></li>
-								</ul>
-								</p>
-							</div> -->
-	<script src="js/jquery-3.0.0.min.js"></script>
-	<script src="js/terminal.js"></script>
+	<audio id="sound-power-on" src="audio/open_001.wav" preload="auto" hidden></audio>
+	<audio id="sound-power-off" src="audio/close_001.wav" preload="auto" hidden></audio>
+	<audio id="sound-select" src="audio/select_001.wav" preload="auto" hidden></audio>
+	<audio id="sound-check" src="audio/click_001.wav" preload="auto" hidden></audio>
+	<audio id="sound-ready" src="audio/confirmation_001.wav" preload="auto" hidden></audio>
+	<script src="sound.js?v=20261031.1"></script>
+	<script src="crt.js?v=20261031.1"></script>
+	<script src="terminal.js?v=20261031.1"></script>
 </body>
-
 </html>

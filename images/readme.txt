@@ -1,1 +1,0 @@
-Big shoutout to http://mitchellthompson.net/demos/terminal/ for artwork. I can't actually make anything half decent with photoshop, so his simple art template is a blessing 
