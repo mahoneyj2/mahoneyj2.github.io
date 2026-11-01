@@ -1,0 +1,527 @@
+:root {
+	--fg: #4bff8a;
+	--dim: #65cb8b;
+	--ink: #04140a;
+	--warn: #e8ff5a;
+	--title: #c8ffdc;
+	--glow: 0 0 2px rgba(75, 255, 138, 0.9), 0 0 10px rgba(75, 255, 138, 0.45);
+	--case-hi: #252b23;
+	--case: #191e18;
+	--case-lo: #0d100d;
+	/* Keep terminal spacing aligned with the font's line height. */
+	--row: 24px;
+}
+
+/* Fixedsys Excelsior, cut down to Latin characters (575 KB TTF -> 3 KB) */
+@font-face {
+	font-family: "Fixedsys";
+	src: url("font/fixedsys.woff2") format("woff2");
+	font-display: swap;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: grid;
+	place-items: center;
+	padding: 2vh 12px;
+	background: radial-gradient(ellipse at 50% 30%, #090b09 0%, #020302 70%);
+	font-family: "Fixedsys", ui-monospace, Consolas, monospace;
+	font-size: 18px;
+	line-height: var(--row);
+}
+
+/* Monitor housing */
+
+.monitor {
+	width: min(100%, 1240px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.bezel {
+	width: 100%;
+	padding: clamp(12px, 3vw, 40px);
+	border-radius: clamp(24px, 6vw, 70px) clamp(24px, 6vw, 70px) clamp(16px, 3vw, 36px) clamp(16px, 3vw, 36px);
+	background: linear-gradient(170deg, var(--case-hi) 0%, var(--case) 35%, var(--case-lo) 100%);
+	box-shadow:
+		inset 0 3px 2px rgba(255, 255, 255, 0.08),
+		inset 0 -6px 12px rgba(0, 0, 0, 0.5),
+		0 30px 60px rgba(0, 0, 0, 0.7),
+		0 0 0 rgba(75, 255, 138, 0);
+	transition: box-shadow 0.8s ease;
+}
+
+/* Powered on: the screen's light spills faintly onto the case */
+.monitor.on .bezel {
+	box-shadow:
+		inset 0 3px 2px rgba(255, 255, 255, 0.08),
+		inset 0 -6px 12px rgba(0, 0, 0, 0.5),
+		0 30px 60px rgba(0, 0, 0, 0.7),
+		0 0 70px rgba(75, 255, 138, 0.07);
+}
+
+/* Glass: recessed into the case, curved corners, glare and vignette */
+.screen {
+	position: relative;
+	height: min(840px, calc(100dvh - 200px));
+	min-height: 380px;
+	border-radius: 11% / 15%;
+	overflow: hidden;
+	/* Dead glass; the green comes from .phosphor when the terminal is on */
+	background: #080b09;
+	box-shadow:
+		0 0 0 clamp(6px, 1.2vw, 14px) #0f110c,
+		0 0 0 calc(clamp(6px, 1.2vw, 14px) + 2px) #272e25,
+		0 0 0 calc(clamp(6px, 1.2vw, 14px) + 2px) rgba(75, 255, 138, 0);
+	transition: box-shadow 0.8s ease;
+	color: var(--fg);
+	text-shadow: var(--glow);
+	text-transform: uppercase;
+	/* It's a screen, not a document: no text selection */
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: default;
+	letter-spacing: 0;
+}
+
+/* Scanlines, flat on top of the glass. Plain stripes with no mask or gradient over
+   them: those resample the 1px lines into moire lines and triangles at 100% zoom */
+.screen::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	pointer-events: none;
+	background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.32) 0 1px, transparent 1px 3px);
+}
+/* A powered-off tube has no raster. Removing the fine pattern also avoids
+   Chrome's fractional-pixel moire on the otherwise dark glass. */
+.js .screen.off::before { display: none; }
+.js .screen.off .glass { background: none; }
+/* The WebGL renderer draws its raster on whole physical pixels. */
+.screen.webgl::before { display: none; }
+
+/* Convex glass: the corners fall away into shadow and the bezel casts a shadow
+   onto the top edge */
+.glass {
+	position: absolute;
+	inset: 0;
+	z-index: 4;
+	pointer-events: none;
+	border-radius: inherit;
+	background:
+		radial-gradient(circle at 0 0, rgba(0, 0, 0, 0.3), transparent 14%),
+		radial-gradient(circle at 100% 0, rgba(0, 0, 0, 0.3), transparent 14%),
+		radial-gradient(circle at 0 100%, rgba(0, 0, 0, 0.3), transparent 14%),
+		radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0.3), transparent 14%),
+		radial-gradient(ellipse 80% 75% at 50% 48%, transparent 65%, rgba(0, 0, 0, 0.25) 100%);
+	box-shadow:
+		inset 0 10px 16px -8px rgba(0, 0, 0, 0.6),
+		inset 0 -6px 14px -8px rgba(0, 0, 0, 0.45),
+		inset 8px 0 14px -10px rgba(0, 0, 0, 0.45),
+		inset -8px 0 14px -10px rgba(0, 0, 0, 0.45),
+		inset 0 0 0 1px rgba(190, 255, 215, 0.06);
+}
+
+/* Glare in the top right and a slow rolling refresh band */
+.screen::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 3;
+	pointer-events: none;
+	background:
+		radial-gradient(ellipse 35% 45% at 82% 12%, rgba(200, 255, 220, 0.13), transparent 70%),
+		linear-gradient(to bottom, transparent 0%, rgba(75, 255, 138, 0.05) 50%, transparent 100%) 0 -30vh / 100% 30vh no-repeat;
+	animation: roll 9s linear infinite, flicker 7s infinite;
+}
+
+.crt {
+	position: relative;
+	z-index: 1;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 60px 84px;
+	transform-origin: center;
+}
+
+/* With WebGL, crt.js draws the screen onto a canvas and the HTML underneath stays
+   invisible, still there for layout, clicks and screen readers */
+.crt-canvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	pointer-events: none;
+	transform-origin: center;
+}
+.screen.webgl .crt { opacity: 0; }
+.screen.off .crt-canvas { display: none; }
+.screen.powering-off .crt-canvas { animation: collapse 0.45s ease-in forwards; }
+.screen.warming .crt, .screen.warming .crt-canvas { visibility: hidden; }
+
+/* The tube establishes its raster before the BIOS writes to it. This layer is
+   separate from the text canvas, so warming never stretches or flashes content. */
+.ignition { display: none; position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.screen.warming .ignition { display: grid; place-items: center; }
+.ignition::before {
+	content: "";
+	position: absolute;
+	left: 12%;
+	right: 12%;
+	height: 1px;
+	top: 50%;
+	background: linear-gradient(to right, transparent, var(--fg), transparent);
+	box-shadow: 0 0 12px rgba(75, 255, 138, 0.35);
+	animation: raster-lock 0.7s ease-out both;
+}
+.screen.warming .phosphor { animation: tube-warm 0.7s ease-out both; }
+
+
+/* The lit phosphor, faded in and out with the power */
+.phosphor {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(ellipse at 50% 45%, #10351d 0%, #082112 55%, #031009 100%);
+	transition: opacity 0.7s ease;
+}
+.screen.off .phosphor { opacity: 0; transition-duration: 1.2s; }
+.monitor.on .screen {
+	box-shadow:
+		0 0 0 clamp(6px, 1.2vw, 14px) #0f110c,
+		0 0 0 calc(clamp(6px, 1.2vw, 14px) + 2px) #272e25,
+		0 0 26px calc(clamp(6px, 1.2vw, 14px) + 2px) rgba(75, 255, 138, 0.09);
+}
+
+.screen.off .crt { visibility: hidden; }
+.screen.off::after { animation: none; background: radial-gradient(ellipse 35% 45% at 82% 12%, rgba(200, 255, 220, 0.06), transparent 70%); }
+.screen.powering-off .crt { animation: collapse 0.45s ease-in forwards; }
+
+/* Without JS there is no power button to press, so the screen is simply on */
+html:not(.js) .screen.off .crt { visibility: visible; }
+html:not(.js) .screen.off .phosphor { opacity: 1; }
+html:not(.js) .power, html:not(.js) .power-label { display: none; }
+
+/* While booting it's a generic machine; the personnel file loads afterwards */
+.screen.booting .personnel { visibility: hidden; }
+
+.sys { flex: none; margin-bottom: calc(1.5 * var(--row)); text-align: center; }
+.sys > * { margin: 0; font: inherit; }
+.sys .personnel { margin-top: 6px; color: var(--title); }
+
+/* Terminal layout: menu on the left, scrolling content on the right */
+
+.term {
+	flex: 1;
+	min-height: 0;
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	gap: 40px;
+}
+
+.menu {
+	display: flex;
+	flex-direction: column;
+}
+.menu a {
+	color: var(--fg);
+	text-decoration: none;
+	padding: 0 4px;
+	margin: 0 -4px;
+	align-self: flex-start;
+}
+.menu a.active,
+.menu a:hover,
+.menu a:focus-visible {
+	background: var(--fg);
+	color: var(--ink);
+	text-shadow: 0 0 8px rgba(75, 255, 138, 0.6);
+	box-shadow: 0 0 10px rgba(75, 255, 138, 0.5);
+	outline: none;
+}
+
+.content {
+	overflow-y: auto;
+	min-width: 0;
+	min-height: 0;
+	padding-right: 16px;
+	padding-bottom: var(--row);
+	scrollbar-width: thin;
+	scrollbar-color: var(--dim) transparent;
+}
+.js .content { scrollbar-width: none; }
+.js .content::-webkit-scrollbar { display: none; }
+
+/* A real control above the curved canvas: visible and draggable even when the
+   underlying HTML is transparent. It only appears when the file overflows. */
+.scrollbar {
+	position: absolute;
+	z-index: 5;
+	width: 14px;
+	border: 1px solid transparent;
+	background: transparent;
+	touch-action: none;
+	cursor: pointer;
+}
+.scrollbar::before {
+	content: "";
+	position: absolute;
+	left: 5px;
+	top: 0;
+	bottom: 0;
+	width: 2px;
+	background: #1c422a;
+}
+.scroll-thumb {
+	position: absolute;
+	left: 3px;
+	right: 3px;
+	top: 0;
+	/* Square pixels and a faint raster, like the Fixedsys lettering. */
+	background: repeating-linear-gradient(to bottom, #4d9c68 0 2px, #244f33 2px 3px);
+	box-shadow: 0 0 3px rgba(75, 255, 138, 0.18);
+}
+.scrollbar:hover .scroll-thumb,
+.scrollbar:focus-visible .scroll-thumb { filter: brightness(1.2); }
+.scrollbar:focus-visible { outline: 1px solid var(--dim); outline-offset: 2px; }
+
+/* Without JS every section is shown; with JS one at a time */
+.js .page { display: none; }
+.js .page.active { display: block; }
+html:not(.js) .page + .page { margin-top: calc(2 * var(--row)); }
+
+h2 {
+	font-size: 1em;
+	font-weight: normal;
+	margin: var(--row) 0 calc(var(--row) / 2);
+	color: var(--title);
+}
+.page > h2:first-child { margin-top: 0; }
+
+p { margin: 0; }
+
+ul { list-style: none; margin: 0; padding: 0; }
+li { padding: 0; text-indent: 0; }
+
+.lead { color: var(--title); margin-bottom: 6px; }
+.facts { margin: var(--row) 0 0; }
+.facts > div { display: grid; grid-template-columns: 13ch minmax(0, 1fr); gap: 2ch; }
+.facts > div + div { margin-top: calc(var(--row) / 2); }
+.facts dt { color: var(--dim); }
+.facts dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.entry { margin-top: var(--row); }
+h3 { margin: 0; font-size: 1em; font-weight: normal; color: var(--title); }
+.entry-heading { display: flex; flex-wrap: wrap; gap: 0 2ch; align-items: baseline; }
+.entry-heading > .meta { flex: 0 0 19ch; }
+.entry-heading > h3 { flex: 1 1 16ch; }
+.entry > p { margin-top: 6px; }
+.stack {
+	margin-top: var(--row);
+	color: var(--dim);
+	font-size: 16px;
+	line-height: 20px;
+}
+.stack-label { margin-bottom: 4px; }
+.project-list { font-size: 16px; line-height: 20px; }
+.project-list > li { display: grid; grid-template-columns: 18ch minmax(0, 1fr); gap: 2ch; padding: calc(var(--row) / 2) 0; }
+.project-name { color: var(--title); }
+.availability, .more-link { margin-top: var(--row); }
+.meta { color: var(--dim); }
+.page > h2 + .meta { margin-bottom: calc(var(--row) / 2); }
+.ok { color: #9dffbe; }
+.bar { white-space: pre; overflow: hidden; }
+
+a { color: var(--fg); }
+.content a:hover, .content a:focus-visible {
+	background: var(--fg);
+	color: var(--ink);
+	text-shadow: none;
+	outline: none;
+}
+
+.power-msg {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 28px;
+	margin: 0;
+	text-align: center;
+	color: var(--warn);
+}
+
+/* Typing without WebGL: the untyped rest of the text holds its space */
+.ghost { visibility: hidden; }
+
+
+/* Boot sequence */
+
+.boot {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	min-height: 0;
+	width: 100%;
+	max-width: 34rem;
+	align-self: center;
+	padding-top: clamp(20px, 6vh, 64px);
+	text-align: center;
+	white-space: pre-wrap;
+}
+.boot .bar { margin-top: var(--row); text-align: left; }
+.boot .logo {
+	white-space: pre;
+	font-size: min(1em, 2.6vw);
+	line-height: 1.15;
+	width: max-content;
+	max-width: 100%;
+	margin: var(--row) auto;
+	text-align: left;
+}
+.boot .line { display: grid; grid-template-columns: 1fr 6ch; column-gap: 1ch; text-align: left; }
+.boot .tick { text-align: right; }
+.boot .memory-line { grid-template-columns: 1fr 13ch; }
+.memory-count { text-align: right; }
+.boot-caption { display: flex; justify-content: space-between; gap: 2ch; margin-bottom: var(--row); color: var(--dim); }
+.boot-system { margin-bottom: var(--row); color: var(--title); }
+.boot-ready { margin-top: var(--row); color: var(--dim); }
+
+/* Base under the screen: vent grille, screws and the orange power button */
+
+.base {
+	width: 72%;
+	display: flex;
+	align-items: center;
+	gap: clamp(8px, 2vw, 22px);
+	padding: clamp(10px, 1.6vw, 16px) clamp(14px, 3vw, 32px);
+	background: linear-gradient(to bottom, #141812, #0a0d09);
+	border-radius: 0 0 14px 14px;
+	box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.6), 0 16px 30px rgba(0, 0, 0, 0.6);
+}
+
+.screw {
+	flex: none;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background:
+		linear-gradient(45deg, transparent 44%, #15170f 44% 56%, transparent 56%),
+		radial-gradient(circle at 35% 35%, #4b5347, #20261c);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+}
+
+.grille {
+	flex: 1;
+	max-width: 260px;
+	height: clamp(18px, 3vw, 26px);
+	border-radius: 4px;
+	background: repeating-linear-gradient(to right, #080b07 0 6px, #20271d 6px 11px);
+	box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* Sound switch and the brushed-metal power label */
+.sound-toggle {
+	flex: none;
+	padding: 5px 6px;
+	border: 1px solid #394532;
+	border-radius: 2px;
+	background: #0c100b;
+	color: #92a982;
+	font: 12px/1 "Fixedsys", ui-monospace, monospace;
+	cursor: pointer;
+}
+.sound-toggle:hover { color: #c3d6b4; border-color: #617451; }
+.sound-toggle:focus-visible { outline: 1px solid var(--fg); outline-offset: 3px; }
+.sound-toggle[aria-pressed="false"] { color: #67715f; }
+
+.power-label {
+	margin-left: auto;
+	padding: 4px 9px 3px;
+	border-radius: 2px;
+	font: 700 11px/1 "Arial Narrow", Arial, sans-serif;
+	letter-spacing: 0.22em;
+	color: #3a3d36;
+	background:
+		repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+		linear-gradient(180deg, #969a8e 0%, #6c7066 55%, #80847a 100%);
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45), 0 -1px 0 rgba(0, 0, 0, 0.4);
+	box-shadow:
+		0 0 0 1px #0d0f0b,
+		inset 0 1px 0 rgba(255, 255, 255, 0.5),
+		inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+		0 1px 0 rgba(255, 255, 255, 0.06);
+	cursor: pointer;
+}
+
+.power {
+	flex: none;
+	width: clamp(34px, 5vw, 46px);
+	height: clamp(34px, 5vw, 46px);
+	border-radius: 4px;
+	border: 3px solid #3c4136;
+	/* Unlit: dull, dark orange plastic */
+	background: linear-gradient(145deg, #5e3b29, #3b2317);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7), inset 0 2px 2px rgba(255, 200, 170, 0.12), inset 0 -3px 4px rgba(0, 0, 0, 0.35);
+	transition: box-shadow 0.5s ease;
+	cursor: pointer;
+}
+.power[aria-pressed="true"] {
+	background: linear-gradient(145deg, #ffa064, #d9572a);
+	box-shadow: 0 0 14px rgba(255, 120, 50, 0.55), inset 0 2px 2px rgba(255, 230, 200, 0.6), inset 0 -3px 4px rgba(0, 0, 0, 0.25);
+}
+.power:active { transform: translateY(1px); }
+.power:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+/* Keep the file readable in a narrow desktop preview as well as on phones. */
+@media (max-width: 1000px) {
+	.term { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: var(--row); }
+	.menu { flex-direction: row; flex-wrap: wrap; column-gap: 16px; }
+}
+
+/* Phones use the full available height and tighter screen padding. */
+
+@media (max-width: 700px) {
+	:root { --row: 20px; }
+	body { font-size: 16px; padding: 8px; place-items: start center; }
+	.screen { height: calc(100dvh - 110px); min-height: 0; border-radius: 9% / 5%; }
+	.crt { padding: 32px 28px 28px; }
+	.facts > div { grid-template-columns: 1fr; gap: 0; }
+	.project-list > li { grid-template-columns: 1fr; gap: 0; }
+	.base { width: 88%; }
+}
+
+@keyframes tube-warm {
+	0% { opacity: 0; filter: brightness(0.6); }
+	55% { opacity: 0.85; filter: brightness(1.12); }
+	100% { opacity: 1; filter: none; }
+}
+@keyframes raster-lock {
+	0% { opacity: 0; transform: translateY(36px); }
+	30% { opacity: 0.45; }
+	100% { opacity: 0; transform: translateY(-36px); }
+}
+@keyframes roll { to { background-position: 0 0, 0 130vh; } }
+@keyframes flicker {
+	0%, 95%, 100% { opacity: 1; }
+	96% { opacity: 0.55; }
+	97% { opacity: 1; }
+	98% { opacity: 0.75; }
+}
+@keyframes collapse {
+	60% { transform: scale(1, 0.01); filter: brightness(3); }
+	100% { transform: scale(0, 0.01); filter: brightness(3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.screen::after, .crt, .crt-canvas, .phosphor, .ignition::before { animation: none !important; }
+	.ignition { display: none !important; }
+	*, *::before, *::after { transition: none !important; }
+}
